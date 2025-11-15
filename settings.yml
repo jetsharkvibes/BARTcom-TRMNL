@@ -1,113 +1,105 @@
-  - keyname: bart_origin_station
-    field_type: select
-    name: BART Origin Station
-    description: Where you're boarding
-    required: true
-    options:
-      - 12TH
-      - 16TH
-      - 19TH
-      - 24TH
-      - ANTC
-      - ASHB
-      - BALB
-      - BAYF
-      - BERY
-      - CAST
-      - CIVC
-      - COLM
-      - COLS
-      - CONC
-      - DALY
-      - DBRK
-      - DELN
-      - DUBL
-      - EMBR
-      - FRMT
-      - FTVL
-      - GLEN
-      - HAYW
-      - LAFY
-      - LAKE
-      - MCAR
-      - MLBR
-      - MLPT
-      - MONT
-      - NBRK
-      - NCON
-      - OAKL
-      - ORIN
-      - PCTR
-      - PHIL
-      - PITT
-      - PLZA
-      - POWL
-      - RICH
-      - ROCK
-      - SANL
-      - SBRN
-      - SFIA
-      - SHAY
-      - SSAN
-      - UCTY
-      - WARM
-      - WCRK
-      - WDUB
-      - WOAK
+- keyname: bart_origin_station
+  field_type: select
+  name: BART Origin Station
+  description: Where you're boarding
+  required: true
+  options:
+  - Antioch: ANTC
+  - Ashby: ASHB
+  - Balboa Park: BALB
+  - Bay Fair: BAYF
+  - Berryessa / North San Jose: BERY
+  - Castro Valley: CAST
+  - Civic Center / UN Plaza: CIVC
+  - Colma: COLM
+  - Coliseum: COLS
+  - Concord: CONC
+  - Daly City: DALY
+  - Downtown Berkeley: DBRK
+  - El Cerrito del Norte: DELN
+  - Dublin / Pleasanton: DUBL
+  - Embarcadero: EMBR
+  - Fremont: FRMT
+  - Fruitvale: FTVL
+  - Glen Park: GLEN
+  - Hayward: HAYW
+  - Lafayette: LAFY
+  - Lake Merritt: LAKE
+  - MacArthur: MCAR
+  - Millbrae: MLBR
+  - Milpitas: MLPT
+  - Montgomery St.: MONT
+  - North Berkeley: NBRK
+  - North Concord / Martinez: NCON
+  - Oakland International Airport: OAKL
+  - Orinda: ORIN
+  - Pittsburg / Bay Point: PITT
+  - Pittsburg Center: PCTR
+  - Pleasant Hill / Contra Costa Centre: PHIL
+  - El Cerrito Plaza: PLZA
+  - Powell St.: POWL
+  - Richmond: RICH
+  - Rockridge: ROCK
+  - San Leandro: SANL
+  - San Bruno: SBRN
+  - San Francisco International Airport: SFIA
+  - South Hayward: SHAY
+  - South San Francisco: SSAN
+  - Union City: UCTY
+  - Warm Springs / South Fremont: WARM
+  - Walnut Creek: WCRK
+  - West Dublin / Pleasanton: WDUB
+  - West Oakland: WOAK
 
-  - keyname: bart_destination_station
-    field_type: select
-    name: BART Destination Station
-    description: Where you're headed
-    required: true
-    options:
-      - 12TH
-      - 16TH
-      - 19TH
-      - 24TH
-      - ANTC
-      - ASHB
-      - BALB
-      - BAYF
-      - BERY
-      - CAST
-      - CIVC
-      - COLM
-      - COLS
-      - CONC
-      - DALY
-      - DBRK
-      - DELN
-      - DUBL
-      - EMBR
-      - FRMT
-      - FTVL
-      - GLEN
-      - HAYW
-      - LAFY
-      - LAKE
-      - MCAR
-      - MLBR
-      - MLPT
-      - MONT
-      - NBRK
-      - NCON
-      - OAKL
-      - ORIN
-      - PCTR
-      - PHIL
-      - PITT
-      - PLZA
-      - POWL
-      - RICH
-      - ROCK
-      - SANL
-      - SBRN
-      - SFIA
-      - SHAY
-      - SSAN
-      - UCTY
-      - WARM
-      - WCRK
-      - WDUB
-      - WOAK
+- keyname: bart_destination_station
+  field_type: select
+  name: BART Destination Station
+  description: Where you're headed
+  required: true
+  options:
+  - Antioch: ANTC
+  - Ashby: ASHB
+  - Balboa Park: BALB
+  - Bay Fair: BAYF
+  - Berryessa / North San Jose: BERY
+  - Castro Valley: CAST
+  - Civic Center / UN Plaza: CIVC
+  - Colma: COLM
+  - Coliseum: COLS
+  - Concord: CONC
+  - Daly City: DALY
+  - Downtown Berkeley: DBRK
+  - El Cerrito del Norte: DELN
+  - Dublin / Pleasanton: DUBL
+  - Embarcadero: EMBR
+  - Fremont: FRMT
+  - Fruitvale: FTVL
+  - Glen Park: GLEN
+  - Hayward: HAYW
+  - Lafayette: LAFY
+  - Lake Merritt: LAKE
+  - MacArthur: MCAR
+  - Millbrae: MLBR
+  - Milpitas: MLPT
+  - Montgomery St.: MONT
+  - North Berkeley: NBRK
+  - North Concord / Martinez: NCON
+  - Oakland International Airport: OAKL
+  - Orinda: ORIN
+  - Pittsburg / Bay Point: PITT
+  - Pittsburg Center: PCTR
+  - Pleasant Hill / Contra Costa Centre: PHIL
+  - El Cerrito Plaza: PLZA
+  - Powell St.: POWL
+  - Richmond: RICH
+  - Rockridge: ROCK
+  - San Leandro: SANL
+  - San Bruno: SBRN
+  - San Francisco International Airport: SFIA
+  - South Hayward: SHAY
+  - South San Francisco: SSAN
+  - Union City: UCTY
+  - Warm Springs / South Fremont: WARM
+  - Walnut Creek: WCRK
+  - West Dublin / Pleasanton: WDUB
+  - West Oakland: WOAK

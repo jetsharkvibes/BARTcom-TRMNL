@@ -1,5 +1,3 @@
-{% assign line_map = 'San Francisco International Airport:SFIA,SF / SFO Airport / Millbrae:MLBR,OAK Airport / Berryessa:BERY,SF / OAK Airport / Berryessa:BERY,SFO / SF / Richmond:RICH,SF / OAK Airport / Dublin/Pleasanton:DUBL,OAK Airport / SF / Daly City:DALY,Antioch:ANTC,San Francisco / Pittsburg/Bay Point:PITT,OAK Airport / Berryessa/North San Jose:BERY,San Francisco Int\'l Airport/Millbrae:SFOM,SFO Airport / Millbrae:SFOM,Millbrae (Caltrain Transfer Platform):MLBR,Richmond:RICH,SF / Daly City:DALY,Warm Springs/South Fremont:WARM,San Francisco / Antioch:ANTC,Antioch:ANTC,Dublin/Pleasanton:DUBL,SFO International Airport:SFIA,San Francisco International Airport:SFIA,Oakland Airport:OAKL,OAK Airport / Dublin/Pleasanton:DUBL' | split: ',' %}
-
 <div class="layout layout--col gap--large">
   <!-- Header: Origin → Destination -->
   <div class="header">
@@ -18,35 +16,65 @@
               {% if trip.leg[0] %}
                 {% assign leg_count = 0 %}
                 {% for leg in trip.leg %}
-                  {% assign train_line = leg['@trainHeadStation'] %}
-                  {% assign to_abbr = '' %}
-                  {% for pair in line_map %}
-                    {% assign parts = pair | split: ':' %}
-                    {% if train_line == parts[0] %}
-                      {% assign to_abbr = parts[1] %}
-                    {% endif %}
-                  {% endfor %}
-                  {% if train_line and leg_count < 2 %}
+                  {% assign heading_lower = leg['@trainHeadStation'] | downcase %}
+                  {% if heading_lower contains 'richmond' %}
+                    {% assign abbreviation = 'RICH' %}
+                  {% elsif heading_lower contains 'millbrae' %}
+                    {% assign abbreviation = 'MLBR' %}
+                  {% elsif heading_lower contains 'dublin' %}
+                    {% assign abbreviation = 'DUBL' %}
+                  {% elsif heading_lower contains 'berryessa' %}
+                    {% assign abbreviation = 'BERY' %}
+                  {% elsif heading_lower contains 'daly' %}
+                    {% assign abbreviation = 'DALY' %}
+                  {% elsif heading_lower contains 'antioch' %}
+                    {% assign abbreviation = 'ANTC' %}
+                  {% elsif heading_lower contains 'pittsburg' %}
+                    {% assign abbreviation = 'PITT' %}
+                  {% elsif heading_lower contains 'sfo' or heading_lower contains 'international airport' %}
+                    {% assign abbreviation = 'SFIA' %}
+                  {% elsif heading_lower contains 'oakland airport' %}
+                    {% assign abbreviation = 'OAKL' %}
+                  {% else %}
+                    {% assign abbreviation = leg['@trainHeadStation'] %}
+                  {% endif %}
+
+                  {% if abbreviation and leg_count < 2 %}
                     <div class="bg--white" style="border-radius: 6px; padding: 8px 10px;">
                       <div style="color: #000; font-weight: bold; font-size: 14px; white-space: nowrap;">
-                        {{ to_abbr | default: train_line }}
+                        {{ abbreviation }}
                       </div>
                     </div>
                     {% assign leg_count = leg_count | plus: 1 %}
                   {% endif %}
                 {% endfor %}
-              {% elsif trip.leg['@trainHeadStation'] %}
-                {% assign train_line = trip.leg['@trainHeadStation'] %}
-                {% assign to_abbr = '' %}
-                {% for pair in line_map %}
-                  {% assign parts = pair | split: ':' %}
-                  {% if train_line == parts[0] %}
-                    {% assign to_abbr = parts[1] %}
-                  {% endif %}
-                {% endfor %}
+              {% else %}
+                {% assign leg = trip.leg %}
+                {% assign heading_lower = leg['@trainHeadStation'] | downcase %}
+                {% if heading_lower contains 'richmond' %}
+                  {% assign abbreviation = 'RICH' %}
+                {% elsif heading_lower contains 'millbrae' %}
+                  {% assign abbreviation = 'MLBR' %}
+                {% elsif heading_lower contains 'dublin' %}
+                  {% assign abbreviation = 'DUBL' %}
+                {% elsif heading_lower contains 'berryessa' %}
+                  {% assign abbreviation = 'BERY' %}
+                {% elsif heading_lower contains 'daly' %}
+                  {% assign abbreviation = 'DALY' %}
+                {% elsif heading_lower contains 'antioch' %}
+                  {% assign abbreviation = 'ANTC' %}
+                {% elsif heading_lower contains 'pittsburg' %}
+                  {% assign abbreviation = 'PITT' %}
+                {% elsif heading_lower contains 'sfo' or heading_lower contains 'international airport' %}
+                  {% assign abbreviation = 'SFIA' %}
+                {% elsif heading_lower contains 'oakland airport' %}
+                  {% assign abbreviation = 'OAKL' %}
+                {% else %}
+                  {% assign abbreviation = leg['@trainHeadStation'] %}
+                {% endif %}
                 <div class="bg--white" style="border-radius: 6px; padding: 8px 10px;">
                   <div style="color: #000; font-weight: bold; font-size: 14px; white-space: nowrap;">
-                    {{ to_abbr | default: train_line }}
+                    {{ abbreviation }}
                   </div>
                 </div>
               {% endif %}
