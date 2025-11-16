@@ -9,7 +9,7 @@ This folder contains the v1 template variants optimized for different screen lay
 ✨ **Real-time BART data** - Shows next 3 upcoming departures and arrival times
 🚂 **Origin & Destination tracking** - See when you leave and when you arrive
 🎨 **E-ink optimized** - Black & white design for perfect readability
-⚡ **Zero infrastructure** - No servers, no backends, no maintenance
+⚡  **Zero infrastructure** - No servers, no backends, no maintenance
 📱 **Direct API calls** - TRMNL device communicates directly with BART's public API
 🔧 **Easy setup** - Just copy & paste configuration into TRMNL
 📐 **Multiple layouts** - Choose from grid, horizontal, or vertical layouts
@@ -30,6 +30,7 @@ This folder contains the v1 template variants optimized for different screen lay
    https://api.bart.gov/api/sched.aspx?cmd=depart&orig={{ bart_origin_station }}&dest={{ bart_destination_station }}&date=now&key=MW9S-E7SL-26DU-VV8V&b=0&a=4&json=y
    ```
    - TRMNL will automatically replace `{{ bart_origin_station }}` and `{{ bart_destination_station }}` with your configuration values
+   - You can replace the public BART API key with your own api key
 5. **Select Template Layout**
    - Choose based on your device orientation:
      - **Full Screen** → Use `bart-tile-full.liquid` (3 trips in horizontal grid)
