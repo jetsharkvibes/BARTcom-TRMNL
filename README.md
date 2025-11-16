@@ -1,8 +1,10 @@
-# BART Tiles - Real-Time Transit Plugin for TRMNL (v1 Templates)
+# BARTcom - Real-Time BART commute details
 
 A minimal, zero-infrastructure TRMNL plugin that displays real-time BART (Bay Area Rapid Transit) departure and arrival times directly on your e-ink device.
 
-This folder contains the v1 template variants optimized for different screen layouts and device orientations.
+You enter an origin station and a destintation station and you'll get the next 2-3 departure times. Multiple views for personalized dashboards with various commutes.
+
+[alt text](https://github.com/jetsharklambo/BARTcom-TRMNL/blob/main/BARTcom.png) "BARTcom Fullscreen"
 
 ## Features
 
