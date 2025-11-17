@@ -40,7 +40,7 @@
                   {% endif %}
 
                   {% if abbreviation and leg_count < 2 %}
-                    <div class="bg--white rounded--small px--medium py--medium">
+                    <div class="bg--white rounded--small" style="padding: 10px 14px;">
                       <div class="label label--small text--black" style="font-weight: bold; white-space: nowrap;">
                         {{ abbreviation }}
                       </div>
@@ -72,7 +72,7 @@
                 {% else %}
                   {% assign abbreviation = leg['@trainHeadStation'] %}
                 {% endif %}
-                <div class="bg--white rounded--small px--medium py--medium">
+                <div class="bg--white rounded--small" style="padding: 10px 14px;">
                   <div class="label label--small text--black" style="font-weight: bold; white-space: nowrap;">
                     {{ abbreviation }}
                   </div>
