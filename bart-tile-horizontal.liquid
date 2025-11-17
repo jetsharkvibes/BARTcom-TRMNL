@@ -8,11 +8,11 @@
     <div class="grid grid--cols-3 gap--medium">
       {% assign trips = root.schedule.request.trip %}
       {% for trip in trips limit:3 %}
-        <div class="item" style="background-color: #000; border-radius: 12px; padding: 12px;">
+        <div class="item bg--black rounded--medium" style="padding: 10px;">
           <div class="content layout--col gap--small">
 
             <!-- Train Line Badges -->
-            <div style="display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 8px; row-gap: 6px;">
+            <div class="flex flex--wrap gap--small mb--medium">
               {% if trip.leg[0] %}
                 {% assign leg_count = 0 %}
                 {% for leg in trip.leg %}
@@ -40,9 +40,9 @@
                   {% endif %}
 
                   {% if abbreviation and leg_count < 2 %}
-                    <div class="bg--white" style="border-radius: 4px; padding: 8px 8px;">
-                      <div style="color: #000; font-weight: bold; font-size: 14px; white-space: nowrap;">
-                        {{ abbreviation }}
+                    <div class="bg--white rounded--small px--medium py--medium">
+                      <div class="label label--small text--black label--outline" style="font-weight: bold; white-space: nowrap;">
+                      {{ abbreviation }}
                       </div>
                     </div>
                     {% assign leg_count = leg_count | plus: 1 %}
@@ -72,20 +72,20 @@
                 {% else %}
                   {% assign abbreviation = leg['@trainHeadStation'] %}
                 {% endif %}
-                <div class="bg--white" style="border-radius: 4px; padding: 8px 8px;">
-                  <div style="color: #000; font-weight: bold; font-size: 14px; white-space: nowrap;">
-                    {{ abbreviation }}
+                <div class="bg--white rounded--small px--medium py--medium">
+                  <div class="label label--small text--black label--outline" style="font-weight: bold; white-space: nowrap;">
+                     {{ abbreviation }}
                   </div>
                 </div>
               {% endif %}
             </div>
 
-            <div class="value value--small" style="line-height: 1.0; white-space: nowrap; color: white; font-size: 2.1em;">
+            <div class="value value--medium text--white" style="line-height: 1.0; white-space: nowrap;">
               {{ trip['@origTimeMin'] }}
             </div>
-            <div class="label label--xsmall" style="color: white; font-size: 1em;">DEPART</div>
-            <div class="divider" style="border-color: rgba(255,255,255,0.2); margin: 4px 0;"></div>
-            <div class="label label--xsmall" style="color: white; font-size: 1em;">ARRIVE {{ trip['@destTimeMin'] }}</div>
+            <div class="label label--xsmall text--white">DEPART</div>
+            <div class="divider" style="border-color: rgba(255,255,255,0.3);"></div>
+            <div class="label label--xsmall text--white">ARRIVE {{ trip['@destTimeMin'] }}</div>
           </div>
         </div>
       {% endfor %}
@@ -102,4 +102,9 @@
       </div>
     </div>
   {% endif %}
+
+  <div class="footer">
+    <div class="divider"></div>
+    <div class="label label--xsmall">Real-time BART schedule</div>
   </div>
+</div>
