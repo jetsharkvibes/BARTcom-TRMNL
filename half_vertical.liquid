@@ -5,9 +5,9 @@
   </div>
 
   {% if root.schedule.request.trip %}
-    <div class="layout layout--col gap--medium">
+    <div class="grid grid--cols-2 gap--medium">
       {% assign trips = root.schedule.request.trip %}
-      {% for trip in trips limit:3 %}
+      {% for trip in trips limit:6 %}
         <div class="item bg--black rounded--medium" style="padding: 10px;">
           <div class="content layout--col">
 
