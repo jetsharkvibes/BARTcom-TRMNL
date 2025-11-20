@@ -23,6 +23,14 @@ Multiple views for unlimited mashup potential.
 
 ### Installation
 
+#### Auto
+
+1. **Visit** https://usetrmnl.com/recipes/181434
+2. Click **install**
+3. **Configure & Save** - Select your BART origin and destination stations
+4. **Set polling interval** in your TRMNL device settings (default: 15 minutes)
+
+#### Manual
 1. **Log into TRMNL** at https://dashboard.trmnl.com
 2. **Create a new Private Plugin**
 3. **Paste Form Fields**
@@ -38,10 +46,10 @@ Multiple views for unlimited mashup potential.
    - You can replace the public BART API key with your own api key
 5. **Select Template Layout**
    - Choose based on your device orientation:
-     - **Full Screen** → Use `bart-tile-full.liquid` (3 trips in horizontal grid)
-     - **Quadrant** → Use `bart-tile-horizontal.liquid` (3 trips in row layout)
-     - **Small** → Use `bart-tile-grid.liquid` (2 trips in 2-column grid)
-     - **Tall** → Use `bart-tile-vertical.liquid` (3 trips in vertical stack)
+     - **Full Screen** → Use `full.liquid` (3 trips in horizontal grid)
+     - **Horizontal** → Use `half-horizontal.liquid` (3 trips in row layout)
+     - **Small** → Use `quadrant.liquid` (2 trips in 2-column grid)
+     - **Tall** → Use `half-vertical.liquid` (3 trips in vertical stack)
 6. **Paste Liquid Template**
    - Copy and paste your chosen template file
 7. **Save & Configure** - Select your BART origin and destination stations
@@ -64,10 +72,10 @@ All 49 BART stations are included: FTVL, 19TH, LAKE, DBRK, EMBR, POWL, SFIA, and
 In TRMNL's layout section (Full Screen, Quadrant, Small, or Tall), paste your chosen template:
 
 **Available layouts:**
-- **`bart-tile-full.liquid`** - 3-column grid layout (shows 3 trips)
-- **`bart-tile-horizontal.liquid`** - 3-column row layout (shows 3 trips)
-- **`bart-tile-grid.liquid`** - 2-column grid layout (shows 2 trips)
-- **`bart-tile-vertical.liquid`** - Vertical stack layout (shows 3 trips)
+- **`=full.liquid`** - 3-column grid layout (shows 3 trips)
+- **`half-horizontal.liquid`** - 3-column row layout (shows 3 trips)
+- **`quadrant.liquid`** - 2-column grid layout (shows 2 trips)
+- **`half-vertical.liquid`** - Vertical stack layout (shows 3 trips)
 
 Each template will:
 - Display your origin → destination as the header
@@ -89,22 +97,12 @@ TRMNL will now poll the BART API every 15 minutes (configurable in TRMNL device 
 | File | Purpose |
 |------|---------|
 | `settings.yml` | TRMNL plugin form fields (origin/destination stations) |
-| `bart-tile-full.liquid` | 3-column grid template (Full Screen layout) |
-| `bart-tile-horizontal.liquid` | 3-column row template (Quadrant layout) |
-| `bart-tile-grid.liquid` | 2-column grid template (Small layout) |
-| `bart-tile-vertical.liquid` | Vertical stack template (Tall layout) |
+| `full.liquid` | 3-column grid template (Full Screen layout) |
+| `half-horizontal.liquid` | 3-column row template (Quadrant layout) |
+| `quadrant.liquid` | 2-column grid template (Small layout) |
+| `half-vertical.liquid` | Vertical stack template (Tall layout) |
 | `README.md` | This file |
 
-## Layout Comparison
-
-Choose your template based on your device screen:
-
-| Layout | Size | Trips | Best For |
-|--------|------|-------|----------|
-| `bart-tile-full.liquid` | Full | 3 | Main display showing all options |
-| `bart-tile-horizontal.liquid` | Quadrant | 3 | Side-by-side horizontal layout |
-| `bart-tile-grid.liquid` | Small | 2 | Limited space, 2-column grid |
-| `bart-tile-vertical.liquid` | Tall | 3 | Vertical orientation, tall devices |
 
 
 ## License

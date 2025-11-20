@@ -1,13 +1,19 @@
-- keyname: bart_origin_station
-  field_type: select
-  name: BART Origin Station
-  description: Where you're boarding
-  required: true
-  options:
-  - 12th St. Oakland City Center: 12TH
-  - 16th St. Mission: 16TH
-  - 19th St. Oakland: 19TH
-  - 24th St. Mission: 24TH
+---
+strategy: polling
+no_screen_padding: 'no'
+dark_mode: 'no'
+static_data: ''
+polling_verb: get
+polling_url: https://api.bart.gov/api/sched.aspx?cmd=depart&orig={{ bart_origin_station }}&dest={{ bart_destination_station }}&date=now&key=MW9S-E7SL-26DU-VV8V&b=0&a=4&json=y
+polling_headers: ''
+polling_body: ''
+id: 181434
+custom_fields:
+ options:
+  - 12th Street Oakland: 12TH
+  - 16th Street Mission: 16TH
+  - 19th Steet Oakland: 19TH
+  - 24th Street Mission: 24TH
   - Antioch: ANTC
   - Ashby: ASHB
   - Balboa Park: BALB
@@ -61,10 +67,10 @@
   description: Where you're headed
   required: true
   options:
-  - 12th St. Oakland City Center: 12TH
-  - 16th St. Mission: 16TH
-  - 19th St. Oakland: 19TH
-  - 24th St. Mission: 24TH
+  - 12th Street Oakland: 12TH
+  - 16th Street Mission: 16TH
+  - 19th Steet Oakland: 19TH
+  - 24th Street Mission: 24TH
   - Antioch: ANTC
   - Ashby: ASHB
   - Balboa Park: BALB
@@ -111,3 +117,11 @@
   - Walnut Creek: WCRK
   - West Dublin / Pleasanton: WDUB
   - West Oakland: WOAK
+
+- keyname: author_bio
+  field_type: author_bio
+  name: About This Plugin
+  description: Real-time Bay Area Rapid Transit commute times at a glance. Displays next 3 departures and arrival times between any two BART stations on your TRMNL.
+  github_url: https://github.com/jetsharklambo/BARTcom-TRMNL
+  learn_more_url: https://maximo.is/jetsharklambo
+  email_address: jetsharklambo+bartcom@gmail.com
