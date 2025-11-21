@@ -14,14 +14,14 @@
       <div class="layout layout--col gap--medium" style="grid-column: span 2;">
 
         <!-- Summary Card: Origin → Destination with unique routes -->
-        <div class="item bg--white rounded--medium" style="padding: 20px; border: 3px solid black;">
-          <div class="content layout--col gap--small">
-            <div class="label label--large text--black" style="font-weight: bold;">
+        <div class="item bg--white rounded--medium" style="padding: 12px; border: 3px solid black;">
+          <div class="content layout--col" style="gap: 6px;">
+            <div class="label label--medium text--black" style="font-weight: bold;">
               {{ root.origin }} → {{ root.destination }}
             </div>
 
             <!-- Collect unique route combinations -->
-            <div class="flex flex--row gap--medium" style="margin-top: 12px;">
+            <div class="flex flex--row gap--small" style="margin-top: 4px;">
               {% assign processed_routes = "" %}
               {% for trip in trips %}
                 {% assign route_key = "" %}
@@ -83,9 +83,9 @@
 
                 <!-- Display route if not already processed -->
                 {% unless processed_routes contains route_key %}
-                  <div class="layout layout--col gap--small" style="padding: 12px; background: #f0f0f0; border-radius: 8px; min-width: 120px;">
+                  <div class="layout layout--col" style="padding: 8px; background: #f0f0f0; border-radius: 6px; min-width: 80px; gap: 4px;">
                     <!-- Route badges -->
-                    <div class="flex flex--wrap gap--small">
+                    <div class="flex flex--wrap" style="gap: 3px;">
                       {% if trip.leg[0] %}
                         {% for leg in trip.leg %}
                           {% assign heading_lower = leg['@trainHeadStation'] | downcase %}
@@ -111,7 +111,7 @@
                             {% assign abbreviation = leg['@trainHeadStation'] %}
                           {% endif %}
 
-                          <div class="bg--black rounded--small px--small py--small">
+                          <div class="bg--black rounded--small" style="padding: 4px 6px;">
                             <div class="label label--xsmall text--white" style="font-weight: bold; white-space: nowrap;">
                               {{ abbreviation }}
                             </div>
@@ -142,7 +142,7 @@
                           {% assign abbreviation = leg['@trainHeadStation'] %}
                         {% endif %}
 
-                        <div class="bg--black rounded--small px--small py--small">
+                        <div class="bg--black rounded--small" style="padding: 4px 6px;">
                           <div class="label label--xsmall text--white" style="font-weight: bold; white-space: nowrap;">
                             {{ abbreviation }}
                           </div>
@@ -151,7 +151,7 @@
                     </div>
 
                     <!-- Travel time -->
-                    <div class="label label--small text--black" style="font-weight: bold; margin-top: 4px;">
+                    <div class="label label--xsmall text--black" style="font-weight: bold;">
                       {{ route_time }} min
                     </div>
                   </div>
