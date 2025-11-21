@@ -8,9 +8,9 @@
     {% assign trips = root.schedule.request.trip %}
 
     <!-- Summary Card: Origin → Destination with unique routes -->
-    <div class="item bg--white rounded--medium" style="padding: 16px;">
+    <div class="item bg--white rounded--medium" style="padding: 20px; border: 3px solid black; width: 100%;">
       <div class="content layout--col gap--small">
-        <div class="label label--medium text--black" style="font-weight: bold;">
+        <div class="label label--large text--black" style="font-weight: bold;">
           {{ root.origin }} → {{ root.destination }}
         </div>
 
@@ -92,7 +92,7 @@
         <!-- Trip duration from first trip -->
         {% assign first_trip = trips[0] %}
         {% if first_trip %}
-          <div class="label label--small text--black" style="margin-top: 8px;">
+          <div class="label label--medium text--black" style="margin-top: 8px; font-weight: bold;">
             Travel time: {{ first_trip['@tripTime'] }} min
           </div>
         {% endif %}
