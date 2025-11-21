@@ -11,7 +11,7 @@
 .col-narrow { flex: 1; min-width: 0; }
 </style>
 
-<div class="layout layout--col gap--large">
+<div class="layout layout--col gap--medium">
   <!-- Header: Origin → Destination -->
   <div class="header">
     <div class="dest-text">
@@ -24,10 +24,10 @@
     {% assign trips = root.schedule.request.trip %}
 
     <!-- Two column flex layout -->
-    <div class="flex flex--row gap--medium">
+    <div class="flex flex--row gap--medium flex--stretch-x">
 
       <!-- Left column - Summary card and first trip large card -->
-      <div class="flex flex--col gap--medium col-wide">
+      <div class="flex flex--col gap--small col-wide">
 
         <!-- Summary Card: Compact route overview -->
         <div class="item bg--white rounded--medium summary-card">
@@ -148,12 +148,12 @@
               {{ origin_name }} → {{ dest_name }}
             </div>
 
-            <!-- Show first 2 unique routes only -->
+            <!-- Show first unique route only -->
             <div class="layout layout--col gap--small mt--small">
               {% assign processed_routes = "" %}
               {% assign route_count = 0 %}
               {% for trip in trips %}
-                {% if route_count < 2 %}
+                {% if route_count < 1 %}
                   {% assign route_key = "" %}
 
                   <!-- Build route key -->
@@ -294,8 +294,8 @@
         <!-- First trip large card -->
         {% assign first_trip = trips[0] %}
         {% if first_trip %}
-        <div class="item bg--black rounded--medium p--large grow">
-          <div class="layout layout--col gap--medium">
+        <div class="item bg--black rounded--medium p--medium">
+          <div class="layout layout--col gap--small">
             <!-- Train Line Badges -->
             <div class="flex flex--wrap gap--small">
               {% if first_trip.leg[0] %}
@@ -366,7 +366,7 @@
             </div>
 
             <!-- Departure Time -->
-            <div class="value value--xlarge text--white nowrap">
+            <div class="value value--large text--white nowrap">
               {{ first_trip['@origTimeMin'] }}
             </div>
             <div class="text--gray-50">DEPART</div>
@@ -374,7 +374,7 @@
             <div class="divider"></div>
 
             <!-- Arrival Time -->
-            <div class="value value--xlarge text--white nowrap">
+            <div class="value value--large text--white nowrap">
               {{ first_trip['@destTimeMin'] }}
             </div>
             <div class="text--gray-50">ARRIVE</div>
@@ -384,7 +384,7 @@
       </div>
 
       <!-- Right column - Three small cards stacked vertically -->
-      <div class="flex flex--col gap--medium col-narrow">
+      <div class="flex flex--col gap--small col-narrow">
         {% for trip in trips offset:1 limit:3 %}
           <div class="item bg--black rounded--medium p--medium">
             <div class="layout layout--col gap--small">
