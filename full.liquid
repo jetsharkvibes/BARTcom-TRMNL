@@ -11,10 +11,10 @@
     <div class="grid grid--cols-3 gap--medium">
 
       <!-- Left column - Summary card and first trip large card (spans 2 columns) -->
-      <div class="layout layout--col gap--medium" style="grid-column: span 2; height: 100%;">
+      <div class="layout layout--col gap--medium" style="grid-column: span 2;">
 
         <!-- Summary Card: Origin → Destination with unique routes -->
-        <div class="item bg--white rounded--medium" style="padding: 8px; border: 3px solid black; flex: 1; overflow: hidden;">
+        <div class="item bg--white rounded--medium" style="padding: 8px; border: 3px solid black;">
           <div class="content layout--col" style="gap: 4px;">
             <!-- Full station names -->
             {% assign origin_code = root.origin %}
@@ -277,7 +277,7 @@
         <!-- First trip large card -->
         {% assign first_trip = trips[0] %}
         {% if first_trip %}
-        <div class="item bg--black rounded--medium" style="padding: 20px; flex: 2; overflow: hidden;">
+        <div class="item bg--black rounded--medium" style="padding: 20px;">
           <div class="content layout--col gap--medium">
             <!-- Train Line Badges -->
             <div class="flex flex--wrap gap--small mb--medium">
