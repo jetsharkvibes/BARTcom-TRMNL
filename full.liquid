@@ -128,12 +128,12 @@
               {% else %}{% assign dest_name = dest_code %}
             {% endcase %}
 
-            <div class="label label--small text--black" style="font-weight: bold;">
+            <div class="label label--medium text--black" style="font-weight: bold;">
               {{ origin_name }} → {{ dest_name }}
             </div>
 
             <!-- Collect unique route combinations -->
-            <div class="flex flex--row gap--small" style="margin-top: 4px;">
+            <div class="layout layout--col" style="gap: 4px; margin-top: 8px;">
               {% assign processed_routes = "" %}
               {% for trip in trips %}
                 {% assign route_key = "" %}
@@ -195,9 +195,9 @@
 
                 <!-- Display route if not already processed -->
                 {% unless processed_routes contains route_key %}
-                  <div class="layout layout--col" style="padding: 8px; background: #f0f0f0; border-radius: 6px; min-width: 80px; gap: 4px;">
+                  <div class="flex flex--row" style="padding: 6px 8px; background: #f0f0f0; border-radius: 6px; align-items: center; justify-content: space-between;">
                     <!-- Route badges -->
-                    <div class="flex flex--wrap" style="gap: 3px;">
+                    <div class="flex flex--wrap" style="gap: 3px; align-items: center;">
                       {% if trip.leg[0] %}
                         {% for leg in trip.leg %}
                           {% assign heading_lower = leg['@trainHeadStation'] | downcase %}
@@ -263,7 +263,7 @@
                     </div>
 
                     <!-- Travel time -->
-                    <div class="label label--xsmall text--black" style="font-weight: bold;">
+                    <div class="label label--small text--black" style="font-weight: bold; white-space: nowrap;">
                       {{ route_time }} min
                     </div>
                   </div>
