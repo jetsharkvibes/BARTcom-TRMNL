@@ -15,7 +15,7 @@
 {%- endcomment -%}
 <style>
 :root {
-  --header-size: 25px;
+  --header-size: 30px;
   --main-time-size: 100px;
   --main-label-size: 20px;
   --side-time-size: 40px;
@@ -23,7 +23,7 @@
   --badge-size: 15px;
   --footer-size: 10px;
 }
-.bart-header { font-size: var(--header-size); }
+.bart-header { line-height: .8; font-size: var(--header-size); }
 .bart-main-time { font-size: var(--main-time-size); }
 .bart-main-label { font-size: var(--main-label-size); }
 .bart-side-time { font-size: var(--side-time-size); }
@@ -40,7 +40,7 @@
       <!-- LEFT COLUMN: Summary + Main Trip (spans 2 columns) -->
       <div class="layout layout--col gap--small col--span-2" style="height: 100%;">
         <!-- Summary Card - 1/3 vertical space -->
-        <div class="item bg--white rounded--medium" style="padding: 8px; border: 2px solid #000; flex: .75;">
+        <div class="item bg--white rounded--medium" style="padding: 8px; border: 2px solid #000; flex: 1;">
           <div class="content layout--col gap--small">
             <!-- Convert station abbreviations to full names for header -->
             {% assign origin_name = root.origin %}
@@ -116,7 +116,7 @@
             {% elsif origin_lower == 'nbrk' or origin_lower contains 'north berkeley' %}
               {% assign origin_name = 'North Berkeley' %}
             {% elsif origin_lower == 'oakl' or origin_lower contains 'oakland' and origin_lower contains 'airport' %}
-              {% assign origin_name = 'Oakland International Airport' %}
+              {% assign origin_name = 'OAK Airport' %}
             {% elsif origin_lower == 'orin' or origin_lower contains 'orinda' %}
               {% assign origin_name = 'Orinda' %}
             {% elsif origin_lower == 'pctr' or origin_lower contains 'pittsburg center' %}
@@ -217,7 +217,7 @@
             {% elsif dest_lower == 'nbrk' or dest_lower contains 'north berkeley' %}
               {% assign destination_name = 'North Berkeley' %}
             {% elsif dest_lower == 'oakl' or dest_lower contains 'oakland' and dest_lower contains 'airport' %}
-              {% assign destination_name = 'Oakland International Airport' %}
+              {% assign destination_name = 'OAK Airport' %}
             {% elsif dest_lower == 'orin' or dest_lower contains 'orinda' %}
               {% assign destination_name = 'Orinda' %}
             {% elsif dest_lower == 'pctr' or dest_lower contains 'pittsburg center' %}
@@ -290,6 +290,10 @@
                             {% assign abbreviation = 'PITT' %}
                           {% elsif heading_lower contains 'sfo' %}
                             {% assign abbreviation = 'SFIA' %}
+                      {% elsif heading_lower contains 'francisco inter' %}
+                    {% assign abbreviation = 'SFIA' %}
+                      {% elsif heading_lower contains 'oakland air' %}
+                  {% assign abbreviation = 'OAKL' %}
                           {% else %}
                             {% assign abbreviation = leg['@trainHeadStation'] %}
                           {% endif %}
@@ -318,6 +322,10 @@
                           {% assign abbreviation = 'PITT' %}
                         {% elsif heading_lower contains 'sfo' %}
                           {% assign abbreviation = 'SFIA' %}
+                        {% elsif heading_lower contains 'francisco inter' %}
+                    {% assign abbreviation = 'SFIA' %}    
+                            {% elsif heading_lower contains 'oakland air' %}
+                  {% assign abbreviation = 'OAKL' %}
                         {% else %}
                           {% assign abbreviation = leg['@trainHeadStation'] %}
                         {% endif %}
@@ -358,6 +366,10 @@
                     {% assign abbreviation = 'PITT' %}
                   {% elsif heading_lower contains 'sfo' %}
                     {% assign abbreviation = 'SFIA' %}
+              {% elsif heading_lower contains 'francisco inter' %}
+                    {% assign abbreviation = 'SFIA' %}
+              {% elsif heading_lower contains 'oakland air' %}
+                  {% assign abbreviation = 'OAKL' %}
                   {% else %}
                     {% assign abbreviation = leg['@trainHeadStation'] %}
                   {% endif %}
@@ -390,6 +402,10 @@
                   {% assign abbreviation = 'PITT' %}
                 {% elsif heading_lower contains 'sfo' %}
                   {% assign abbreviation = 'SFIA' %}
+                    {% elsif heading_lower contains 'francisco inter' %}
+                    {% assign abbreviation = 'SFIA' %}
+                    {% elsif heading_lower contains 'oakland air' %}
+                  {% assign abbreviation = 'OAKL' %}
                 {% else %}
                   {% assign abbreviation = leg['@trainHeadStation'] %}
                 {% endif %}
@@ -436,6 +452,10 @@
                       {% assign abbreviation = 'PITT' %}
                     {% elsif heading_lower contains 'sfo' %}
                       {% assign abbreviation = 'SFIA' %}
+                {% elsif heading_lower contains 'francisco inter' %}
+                    {% assign abbreviation = 'SFIA' %}
+                {% elsif heading_lower contains 'oakland air' %}
+                  {% assign abbreviation = 'OAKL' %}
                     {% else %}
                       {% assign abbreviation = leg['@trainHeadStation'] %}
                     {% endif %}
@@ -468,6 +488,10 @@
                     {% assign abbreviation = 'PITT' %}
                   {% elsif heading_lower contains 'sfo' %}
                     {% assign abbreviation = 'SFIA' %}
+                      {% elsif heading_lower contains 'francisco inter' %}
+                    {% assign abbreviation = 'SFIA' %}
+                 {% elsif heading_lower contains 'oakland air' %}
+                  {% assign abbreviation = 'OAKL' %}     
                   {% else %}
                     {% assign abbreviation = leg['@trainHeadStation'] %}
                   {% endif %}
