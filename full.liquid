@@ -1,9 +1,9 @@
-<div class="layout layout--col gap--medium">
+<div class="layout layout--col gap--small">
   {% if root.schedule.request.trip %}
     {% assign trips = root.schedule.request.trip %}
-    <div class="grid grid--cols-2 gap--small">
-      <!-- LEFT COLUMN: Summary + Main Trip -->
-      <div class="layout layout--col gap--small">
+    <div class="grid grid--cols-3 gap--small">
+      <!-- LEFT COLUMN: Summary + Main Trip (spans 2 columns) -->
+      <div class="layout layout--col gap--small col--span-2">
         <!-- Summary Card -->
         <div class="item bg--white rounded--medium" style="padding: 8px; border: 2px solid #000;">
           <div class="content layout--col gap--small">
@@ -183,7 +183,7 @@
         </div>
       </div>
 
-      <!-- RIGHT COLUMN: Three Smaller Trip Cards -->
+      <!-- RIGHT COLUMN: Three Smaller Trip Cards (spans 1 column) -->
       <div class="layout layout--col gap--small">
         {% for trip in trips offset:1 limit:3 %}
           <div class="item bg--black rounded--medium" style="padding: 6px;">
