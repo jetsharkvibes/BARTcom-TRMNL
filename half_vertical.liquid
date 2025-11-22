@@ -6,39 +6,35 @@
   All values are in pixels (px).
 
   --header-size      - Route title (Origin → Destination)
-  --main-time-size   - Large departure time in main card
-  --main-label-size  - Labels in main card (DEPART/ARRIVE)
-  --side-time-size   - Departure times in side cards
-  --side-label-size  - Labels in side cards (ARRIVE)
+  --side-time-size   - Departure times in cards
+  --side-label-size  - Labels in cards (DEPART/ARRIVE)
   --badge-size       - Train line badges and route labels
   --footer-size      - Footer text
 {%- endcomment -%}
 <style>
 :root {
-  --header-size: 30px;
-  --main-time-size: 100px;
-  --main-label-size: 20px;
-  --side-time-size: 40px;
-  --side-label-size: 15px;
+  --header-size: 17px;
+  --side-time-size: 30px;
+  --side-label-size: 10px;
   --badge-size: 15px;
   --footer-size: 10px;
 }
-.bart-header { line-height: .8; font-size: var(--header-size); }
+.bart-header { font-size: var(--header-size); }
 .bart-main-time { font-size: var(--main-time-size); }
 .bart-main-label { font-size: var(--main-label-size); }
 .bart-side-time { font-size: var(--side-time-size); }
 .bart-side-label { font-size: var(--side-label-size); }
-.bart-badge { font-size: var(--badge-size); }
-.bart-badge-container { padding: 3px; }
+.bart-badge { padding: 2px; font-size: var(--badge-size); }
+.bart-badge-container { padding: 2px; }
 .bart-footer { font-size: var(--footer-size); }
 </style>
 
-<div class="layout layout--col gap--small">
+<div class="layout layout--col gap--small" style="width: 100%;">
   {% if root.schedule.request.trip %}
     {% assign trips = root.schedule.request.trip %}
 
     <!-- Summary Card -->
-    <div class="item bg--white rounded--medium" style="padding: 8px; border: 2px solid #000;">
+    <div class="item bg--white rounded--medium" style="padding: 8px; border: 2px solid #000; width: 100%;">
       <div class="content layout--col gap--small">
         <!-- Convert station abbreviations to full names for header -->
         {% assign origin_name = root.origin %}
@@ -339,10 +335,9 @@
     </div>
 
     <!-- Trip Cards - Vertical Stack -->
-    <div class="layout layout--col gap--small">
-      {% for trip in trips limit:3 %}
-        <div class="item bg--black rounded--medium" style="padding: 8px;">
-          <div class="content layout--col gap--small flex--center-x">
+    {% for trip in trips limit:3 %}
+      <div class="item bg--black rounded--medium" style="padding: 8px; width: 100%;">
+        <div class="content layout--col gap--small flex--center-x">
             <!-- Train Line Badges -->
             <div class="flex flex--wrap gap--small">
               {% if trip.leg[0] %}
@@ -418,8 +413,7 @@
             <div class="label label--small text--white bart-side-label">ARRIVE {{ trip['@destTimeMin'] }}</div>
           </div>
         </div>
-      {% endfor %}
-    </div>
+    {% endfor %}
   {% else %}
     <!-- Error State: No data -->
     <div class="item">
