@@ -337,9 +337,9 @@
     <!-- Trip Cards - Three Column Layout -->
     {% for trip in trips limit:3 %}
       <div class="item bg--black rounded--medium" style="padding: 8px; width: 100%;">
-        <div class="content flex flex--between" style="align-items: center;">
-          <!-- Column 1: Train Line Badges -->
-          <div class="flex flex--wrap gap--small" style="flex: 1;">
+        <div class="content" style="display: flex; flex-direction: row; align-items: center; justify-content: space-between; gap: 8px;">
+          <!-- Column 1: Train Line Badges (Left) -->
+          <div style="display: flex; flex-direction: column; gap: 4px; align-items: flex-start; min-width: 60px;">
             {% if trip.leg[0] %}
               {% assign leg_count = 0 %}
               {% for leg in trip.leg %}
@@ -407,14 +407,14 @@
             {% endif %}
           </div>
 
-          <!-- Column 2: Arrival Time -->
-          <div class="layout--col flex--center-x" style="flex: 1; text-align: center;">
+          <!-- Column 2: Arrival Time (Center) -->
+          <div style="display: flex; flex-direction: column; align-items: center; flex: 1; text-align: center;">
             <div class="value value--medium text--white bart-side-time" style="line-height: 1.0;">{{ trip['@destTimeMin'] }}</div>
             <div class="label label--small text--white bart-side-label">ARRIVE</div>
           </div>
 
-          <!-- Column 3: Other Badges (Platform, Bike, Delay) -->
-          <div class="flex flex--wrap gap--small" style="flex: 1; justify-content: flex-end;">
+          <!-- Column 3: Other Badges (Right) -->
+          <div style="display: flex; flex-direction: column; gap: 4px; align-items: flex-end; min-width: 60px;">
             {% if trip.leg[0] %}
               {% for leg in trip.leg %}
                 {% if leg['@bikeflag'] == '1' %}
