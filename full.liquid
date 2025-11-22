@@ -175,21 +175,18 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border: 2px solid #000;
-    border-radius: var(--radius-small);
-    padding: var(--gap-small);
-    margin-bottom: var(--gap-small);
+    padding: var(--gap-small) 0;
     line-height: var(--line-height-tight);
-  }
-
-  .unique-trip-row:last-child {
-    margin-bottom: 0;
   }
 
   .trip-route-name {
     font-size: var(--font-size-badge);
     font-weight: bold;
     line-height: var(--line-height-tight);
+    border: 2px solid #000;
+    border-radius: var(--radius-small);
+    padding: var(--gap-small);
+    display: inline-block;
   }</style>
 
 <div class="layout layout--col gap--large">
@@ -201,7 +198,107 @@
         {% comment %}Resolve origin station name{% endcomment %}
         {% capture origin_lower %}{{ root.origin | downcase }}{% endcapture %}
         {% assign origin_lower = origin_lower | strip %}
-        {% if origin_lower contains '12th' %}
+        {% if origin_lower == '12th' %}
+          {% assign origin_full = '12th St. Oakland City Center' %}
+        {% elsif origin_lower == '16th' %}
+          {% assign origin_full = '16th St. Mission' %}
+        {% elsif origin_lower == '19th' %}
+          {% assign origin_full = '19th St. Oakland' %}
+        {% elsif origin_lower == '24th' %}
+          {% assign origin_full = '24th St. Mission' %}
+        {% elsif origin_lower == 'antc' %}
+          {% assign origin_full = 'Antioch' %}
+        {% elsif origin_lower == 'ashb' %}
+          {% assign origin_full = 'Ashby' %}
+        {% elsif origin_lower == 'balb' %}
+          {% assign origin_full = 'Balboa Park' %}
+        {% elsif origin_lower == 'bayf' %}
+          {% assign origin_full = 'Bay Fair' %}
+        {% elsif origin_lower == 'bery' %}
+          {% assign origin_full = 'Berryessa / North San Jose' %}
+        {% elsif origin_lower == 'cast' %}
+          {% assign origin_full = 'Castro Valley' %}
+        {% elsif origin_lower == 'civc' %}
+          {% assign origin_full = 'Civic Center / UN Plaza' %}
+        {% elsif origin_lower == 'cols' %}
+          {% assign origin_full = 'Coliseum' %}
+        {% elsif origin_lower == 'colm' %}
+          {% assign origin_full = 'Colma' %}
+        {% elsif origin_lower == 'ncon' %}
+          {% assign origin_full = 'North Concord / Martinez' %}
+        {% elsif origin_lower == 'conc' %}
+          {% assign origin_full = 'Concord' %}
+        {% elsif origin_lower == 'daly' %}
+          {% assign origin_full = 'Daly City' %}
+        {% elsif origin_lower == 'dbrk' %}
+          {% assign origin_full = 'Downtown Berkeley' %}
+        {% elsif origin_lower == 'dubl' %}
+          {% assign origin_full = 'Dublin / Pleasanton' %}
+        {% elsif origin_lower == 'deln' %}
+          {% assign origin_full = 'El Cerrito del Norte' %}
+        {% elsif origin_lower == 'plza' %}
+          {% assign origin_full = 'El Cerrito Plaza' %}
+        {% elsif origin_lower == 'embr' %}
+          {% assign origin_full = 'Embarcadero' %}
+        {% elsif origin_lower == 'warm' %}
+          {% assign origin_full = 'Warm Springs / South Fremont' %}
+        {% elsif origin_lower == 'frmt' %}
+          {% assign origin_full = 'Fremont' %}
+        {% elsif origin_lower == 'ftvl' %}
+          {% assign origin_full = 'Fruitvale' %}
+        {% elsif origin_lower == 'glen' %}
+          {% assign origin_full = 'Glen Park' %}
+        {% elsif origin_lower == 'shay' %}
+          {% assign origin_full = 'South Hayward' %}
+        {% elsif origin_lower == 'hayw' %}
+          {% assign origin_full = 'Hayward' %}
+        {% elsif origin_lower == 'lafy' %}
+          {% assign origin_full = 'Lafayette' %}
+        {% elsif origin_lower == 'lake' %}
+          {% assign origin_full = 'Lake Merritt' %}
+        {% elsif origin_lower == 'mcar' %}
+          {% assign origin_full = 'MacArthur' %}
+        {% elsif origin_lower == 'mlbr' %}
+          {% assign origin_full = 'Millbrae' %}
+        {% elsif origin_lower == 'mlpt' %}
+          {% assign origin_full = 'Milpitas' %}
+        {% elsif origin_lower == 'mont' %}
+          {% assign origin_full = 'Montgomery St.' %}
+        {% elsif origin_lower == 'nbrk' %}
+          {% assign origin_full = 'North Berkeley' %}
+        {% elsif origin_lower == 'oakl' %}
+          {% assign origin_full = 'Oakland International Airport' %}
+        {% elsif origin_lower == 'orin' %}
+          {% assign origin_full = 'Orinda' %}
+        {% elsif origin_lower == 'pctr' %}
+          {% assign origin_full = 'Pittsburg Center' %}
+        {% elsif origin_lower == 'pitt' %}
+          {% assign origin_full = 'Pittsburg / Bay Point' %}
+        {% elsif origin_lower == 'phil' %}
+          {% assign origin_full = 'Pleasant Hill / Contra Costa Centre' %}
+        {% elsif origin_lower == 'powl' %}
+          {% assign origin_full = 'Powell St.' %}
+        {% elsif origin_lower == 'rich' %}
+          {% assign origin_full = 'Richmond' %}
+        {% elsif origin_lower == 'rock' %}
+          {% assign origin_full = 'Rockridge' %}
+        {% elsif origin_lower == 'sbrn' %}
+          {% assign origin_full = 'San Bruno' %}
+        {% elsif origin_lower == 'sfia' %}
+          {% assign origin_full = 'San Francisco International Airport' %}
+        {% elsif origin_lower == 'sanl' %}
+          {% assign origin_full = 'San Leandro' %}
+        {% elsif origin_lower == 'ssan' %}
+          {% assign origin_full = 'South San Francisco' %}
+        {% elsif origin_lower == 'ucty' %}
+          {% assign origin_full = 'Union City' %}
+        {% elsif origin_lower == 'wcrk' %}
+          {% assign origin_full = 'Walnut Creek' %}
+        {% elsif origin_lower == 'wdub' %}
+          {% assign origin_full = 'West Dublin / Pleasanton' %}
+        {% elsif origin_lower == 'woak' %}
+          {% assign origin_full = 'West Oakland' %}
+        {% elsif origin_lower contains '12th' %}
           {% assign origin_full = '12th St. Oakland City Center' %}
         {% elsif origin_lower contains '16th' %}
           {% assign origin_full = '16th St. Mission' %}
@@ -310,7 +407,107 @@
         {% comment %}Resolve destination station name{% endcomment %}
         {% capture dest_lower %}{{ root.destination | downcase }}{% endcapture %}
         {% assign dest_lower = dest_lower | strip %}
-        {% if dest_lower contains '12th' %}
+        {% if dest_lower == '12th' %}
+          {% assign dest_full = '12th St. Oakland City Center' %}
+        {% elsif dest_lower == '16th' %}
+          {% assign dest_full = '16th St. Mission' %}
+        {% elsif dest_lower == '19th' %}
+          {% assign dest_full = '19th St. Oakland' %}
+        {% elsif dest_lower == '24th' %}
+          {% assign dest_full = '24th St. Mission' %}
+        {% elsif dest_lower == 'antc' %}
+          {% assign dest_full = 'Antioch' %}
+        {% elsif dest_lower == 'ashb' %}
+          {% assign dest_full = 'Ashby' %}
+        {% elsif dest_lower == 'balb' %}
+          {% assign dest_full = 'Balboa Park' %}
+        {% elsif dest_lower == 'bayf' %}
+          {% assign dest_full = 'Bay Fair' %}
+        {% elsif dest_lower == 'bery' %}
+          {% assign dest_full = 'Berryessa / North San Jose' %}
+        {% elsif dest_lower == 'cast' %}
+          {% assign dest_full = 'Castro Valley' %}
+        {% elsif dest_lower == 'civc' %}
+          {% assign dest_full = 'Civic Center / UN Plaza' %}
+        {% elsif dest_lower == 'cols' %}
+          {% assign dest_full = 'Coliseum' %}
+        {% elsif dest_lower == 'colm' %}
+          {% assign dest_full = 'Colma' %}
+        {% elsif dest_lower == 'ncon' %}
+          {% assign dest_full = 'North Concord / Martinez' %}
+        {% elsif dest_lower == 'conc' %}
+          {% assign dest_full = 'Concord' %}
+        {% elsif dest_lower == 'daly' %}
+          {% assign dest_full = 'Daly City' %}
+        {% elsif dest_lower == 'dbrk' %}
+          {% assign dest_full = 'Downtown Berkeley' %}
+        {% elsif dest_lower == 'dubl' %}
+          {% assign dest_full = 'Dublin / Pleasanton' %}
+        {% elsif dest_lower == 'deln' %}
+          {% assign dest_full = 'El Cerrito del Norte' %}
+        {% elsif dest_lower == 'plza' %}
+          {% assign dest_full = 'El Cerrito Plaza' %}
+        {% elsif dest_lower == 'embr' %}
+          {% assign dest_full = 'Embarcadero' %}
+        {% elsif dest_lower == 'warm' %}
+          {% assign dest_full = 'Warm Springs / South Fremont' %}
+        {% elsif dest_lower == 'frmt' %}
+          {% assign dest_full = 'Fremont' %}
+        {% elsif dest_lower == 'ftvl' %}
+          {% assign dest_full = 'Fruitvale' %}
+        {% elsif dest_lower == 'glen' %}
+          {% assign dest_full = 'Glen Park' %}
+        {% elsif dest_lower == 'shay' %}
+          {% assign dest_full = 'South Hayward' %}
+        {% elsif dest_lower == 'hayw' %}
+          {% assign dest_full = 'Hayward' %}
+        {% elsif dest_lower == 'lafy' %}
+          {% assign dest_full = 'Lafayette' %}
+        {% elsif dest_lower == 'lake' %}
+          {% assign dest_full = 'Lake Merritt' %}
+        {% elsif dest_lower == 'mcar' %}
+          {% assign dest_full = 'MacArthur' %}
+        {% elsif dest_lower == 'mlbr' %}
+          {% assign dest_full = 'Millbrae' %}
+        {% elsif dest_lower == 'mlpt' %}
+          {% assign dest_full = 'Milpitas' %}
+        {% elsif dest_lower == 'mont' %}
+          {% assign dest_full = 'Montgomery St.' %}
+        {% elsif dest_lower == 'nbrk' %}
+          {% assign dest_full = 'North Berkeley' %}
+        {% elsif dest_lower == 'oakl' %}
+          {% assign dest_full = 'Oakland International Airport' %}
+        {% elsif dest_lower == 'orin' %}
+          {% assign dest_full = 'Orinda' %}
+        {% elsif dest_lower == 'pctr' %}
+          {% assign dest_full = 'Pittsburg Center' %}
+        {% elsif dest_lower == 'pitt' %}
+          {% assign dest_full = 'Pittsburg / Bay Point' %}
+        {% elsif dest_lower == 'phil' %}
+          {% assign dest_full = 'Pleasant Hill / Contra Costa Centre' %}
+        {% elsif dest_lower == 'powl' %}
+          {% assign dest_full = 'Powell St.' %}
+        {% elsif dest_lower == 'rich' %}
+          {% assign dest_full = 'Richmond' %}
+        {% elsif dest_lower == 'rock' %}
+          {% assign dest_full = 'Rockridge' %}
+        {% elsif dest_lower == 'sbrn' %}
+          {% assign dest_full = 'San Bruno' %}
+        {% elsif dest_lower == 'sfia' %}
+          {% assign dest_full = 'San Francisco International Airport' %}
+        {% elsif dest_lower == 'sanl' %}
+          {% assign dest_full = 'San Leandro' %}
+        {% elsif dest_lower == 'ssan' %}
+          {% assign dest_full = 'South San Francisco' %}
+        {% elsif dest_lower == 'ucty' %}
+          {% assign dest_full = 'Union City' %}
+        {% elsif dest_lower == 'wcrk' %}
+          {% assign dest_full = 'Walnut Creek' %}
+        {% elsif dest_lower == 'wdub' %}
+          {% assign dest_full = 'West Dublin / Pleasanton' %}
+        {% elsif dest_lower == 'woak' %}
+          {% assign dest_full = 'West Oakland' %}
+        {% elsif dest_lower contains '12th' %}
           {% assign dest_full = '12th St. Oakland City Center' %}
         {% elsif dest_lower contains '16th' %}
           {% assign dest_full = '16th St. Mission' %}
