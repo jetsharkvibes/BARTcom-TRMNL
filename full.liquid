@@ -1,60 +1,48 @@
 <style>
 .dest-text { line-height: .8; font-size: 2.5em; }
-.summary-card { padding: 8px; border: 3px solid black; flex-shrink: 0; }
-.summary-compact { gap: 2px; }
-.route-row { padding: 3px 5px; background: #f0f0f0; border-radius: 4px; }
-.route-badges { gap: 3px; }
-.badge-sm { padding: 3px 5px; }
-.bold-nowrap { font-weight: bold; white-space: nowrap; }
-.nowrap { white-space: nowrap; }
-.col-wide { flex: 2; min-width: 0; }
-.col-narrow { flex: 1; min-width: 0; }
 </style>
-
-<div class="layout layout--col gap--medium">
+<div class="layout layout--col gap--large">
   <!-- Header: Origin → Destination -->
   <div class="header">
-    <div class="dest-text">
-      <div>{{ root.origin }}</div>
-      <div>{{ root.destination }}</div>
-    </div>
+    <div class="title title--large">{{ root.origin }} → {{ root.destination }}</div>
   </div>
 
   {% if root.schedule.request.trip %}
     {% assign trips = root.schedule.request.trip %}
 
-    <!-- Two column flex layout -->
-    <div class="flex flex--row gap--medium flex--stretch-x">
+    <!-- Two column layout: Large card left, three small cards right -->
+    <div class="grid grid--cols-3 gap--medium">
 
-      <!-- Left column - Summary card and first trip large card -->
-      <div class="flex flex--col gap--small col-wide">
+      <!-- Left column - Summary card and first trip large card (spans 2 columns) -->
+      <div class="layout layout--col gap--medium" style="grid-column: span 2; ">
 
-        <!-- Summary Card: Compact route overview -->
-        <div class="item bg--white rounded--medium summary-card">
-          <div class="layout layout--col summary-compact">
+        <!-- Summary Card: Origin → Destination with unique routes -->
+        <div class="item bg--white rounded--medium" style="padding: 8px; border: 3px solid black; flex-shrink: 75;">
+          <div class="content layout--col" style="gap: 4px;">
+            <div class="value value--large text--gray-60">
             <!-- Full station names -->
             {% assign origin_code = root.origin %}
             {% assign dest_code = root.destination %}
-
+</div>
             {% case origin_code %}
-              {% when '12TH' %}{% assign origin_name = '12th St Oakland' %}
-              {% when '16TH' %}{% assign origin_name = '16th St Mission' %}
-              {% when '19TH' %}{% assign origin_name = '19th St Oakland' %}
-              {% when '24TH' %}{% assign origin_name = '24th St Mission' %}
+              {% when '12TH' %}{% assign origin_name = '12th Street Oakland' %}
+              {% when '16TH' %}{% assign origin_name = '16th Street Mission' %}
+              {% when '19TH' %}{% assign origin_name = '19th Street Oakland' %}
+              {% when '24TH' %}{% assign origin_name = '24th Street Mission' %}
               {% when 'ANTC' %}{% assign origin_name = 'Antioch' %}
               {% when 'ASHB' %}{% assign origin_name = 'Ashby' %}
               {% when 'BALB' %}{% assign origin_name = 'Balboa Park' %}
               {% when 'BAYF' %}{% assign origin_name = 'Bay Fair' %}
-              {% when 'BERY' %}{% assign origin_name = 'Berryessa' %}
+              {% when 'BERY' %}{% assign origin_name = 'Berryessa / North San Jose' %}
               {% when 'CAST' %}{% assign origin_name = 'Castro Valley' %}
-              {% when 'CIVC' %}{% assign origin_name = 'Civic Center' %}
+              {% when 'CIVC' %}{% assign origin_name = 'Civic Center / UN Plaza' %}
               {% when 'COLM' %}{% assign origin_name = 'Colma' %}
               {% when 'COLS' %}{% assign origin_name = 'Coliseum' %}
               {% when 'CONC' %}{% assign origin_name = 'Concord' %}
               {% when 'DALY' %}{% assign origin_name = 'Daly City' %}
               {% when 'DBRK' %}{% assign origin_name = 'Downtown Berkeley' %}
               {% when 'DELN' %}{% assign origin_name = 'El Cerrito del Norte' %}
-              {% when 'DUBL' %}{% assign origin_name = 'Dublin' %}
+              {% when 'DUBL' %}{% assign origin_name = 'Dublin / Pleasanton' %}
               {% when 'EMBR' %}{% assign origin_name = 'Embarcadero' %}
               {% when 'FRMT' %}{% assign origin_name = 'Fremont' %}
               {% when 'FTVL' %}{% assign origin_name = 'Fruitvale' %}
@@ -65,50 +53,50 @@
               {% when 'MCAR' %}{% assign origin_name = 'MacArthur' %}
               {% when 'MLBR' %}{% assign origin_name = 'Millbrae' %}
               {% when 'MLPT' %}{% assign origin_name = 'Milpitas' %}
-              {% when 'MONT' %}{% assign origin_name = 'Montgomery St' %}
+              {% when 'MONT' %}{% assign origin_name = 'Montgomery St.' %}
               {% when 'NBRK' %}{% assign origin_name = 'North Berkeley' %}
-              {% when 'NCON' %}{% assign origin_name = 'North Concord' %}
-              {% when 'OAKL' %}{% assign origin_name = 'Oakland Airport' %}
+              {% when 'NCON' %}{% assign origin_name = 'North Concord / Martinez' %}
+              {% when 'OAKL' %}{% assign origin_name = 'Oakland International Airport' %}
               {% when 'ORIN' %}{% assign origin_name = 'Orinda' %}
-              {% when 'PITT' %}{% assign origin_name = 'Pittsburg' %}
+              {% when 'PITT' %}{% assign origin_name = 'Pittsburg / Bay Point' %}
               {% when 'PCTR' %}{% assign origin_name = 'Pittsburg Center' %}
-              {% when 'PHIL' %}{% assign origin_name = 'Pleasant Hill' %}
+              {% when 'PHIL' %}{% assign origin_name = 'Pleasant Hill / Contra Costa Centre' %}
               {% when 'PLZA' %}{% assign origin_name = 'El Cerrito Plaza' %}
-              {% when 'POWL' %}{% assign origin_name = 'Powell St' %}
+              {% when 'POWL' %}{% assign origin_name = 'Powell St.' %}
               {% when 'RICH' %}{% assign origin_name = 'Richmond' %}
               {% when 'ROCK' %}{% assign origin_name = 'Rockridge' %}
               {% when 'SANL' %}{% assign origin_name = 'San Leandro' %}
               {% when 'SBRN' %}{% assign origin_name = 'San Bruno' %}
-              {% when 'SFIA' %}{% assign origin_name = 'SFO Airport' %}
+              {% when 'SFIA' %}{% assign origin_name = 'San Francisco International Airport' %}
               {% when 'SHAY' %}{% assign origin_name = 'South Hayward' %}
-              {% when 'SSAN' %}{% assign origin_name = 'South SF' %}
+              {% when 'SSAN' %}{% assign origin_name = 'South San Francisco' %}
               {% when 'UCTY' %}{% assign origin_name = 'Union City' %}
-              {% when 'WARM' %}{% assign origin_name = 'Warm Springs' %}
+              {% when 'WARM' %}{% assign origin_name = 'Warm Springs / South Fremont' %}
               {% when 'WCRK' %}{% assign origin_name = 'Walnut Creek' %}
-              {% when 'WDUB' %}{% assign origin_name = 'West Dublin' %}
+              {% when 'WDUB' %}{% assign origin_name = 'West Dublin / Pleasanton' %}
               {% when 'WOAK' %}{% assign origin_name = 'West Oakland' %}
               {% else %}{% assign origin_name = origin_code %}
             {% endcase %}
 
             {% case dest_code %}
-              {% when '12TH' %}{% assign dest_name = '12th St Oakland' %}
-              {% when '16TH' %}{% assign dest_name = '16th St Mission' %}
-              {% when '19TH' %}{% assign dest_name = '19th St Oakland' %}
-              {% when '24TH' %}{% assign dest_name = '24th St Mission' %}
+              {% when '12TH' %}{% assign dest_name = '12th Street Oakland' %}
+              {% when '16TH' %}{% assign dest_name = '16th Street Mission' %}
+              {% when '19TH' %}{% assign dest_name = '19th Street Oakland' %}
+              {% when '24TH' %}{% assign dest_name = '24th Street Mission' %}
               {% when 'ANTC' %}{% assign dest_name = 'Antioch' %}
               {% when 'ASHB' %}{% assign dest_name = 'Ashby' %}
               {% when 'BALB' %}{% assign dest_name = 'Balboa Park' %}
               {% when 'BAYF' %}{% assign dest_name = 'Bay Fair' %}
-              {% when 'BERY' %}{% assign dest_name = 'Berryessa' %}
+              {% when 'BERY' %}{% assign dest_name = 'Berryessa / North San Jose' %}
               {% when 'CAST' %}{% assign dest_name = 'Castro Valley' %}
-              {% when 'CIVC' %}{% assign dest_name = 'Civic Center' %}
+              {% when 'CIVC' %}{% assign dest_name = 'Civic Center / UN Plaza' %}
               {% when 'COLM' %}{% assign dest_name = 'Colma' %}
               {% when 'COLS' %}{% assign dest_name = 'Coliseum' %}
               {% when 'CONC' %}{% assign dest_name = 'Concord' %}
               {% when 'DALY' %}{% assign dest_name = 'Daly City' %}
               {% when 'DBRK' %}{% assign dest_name = 'Downtown Berkeley' %}
               {% when 'DELN' %}{% assign dest_name = 'El Cerrito del Norte' %}
-              {% when 'DUBL' %}{% assign dest_name = 'Dublin' %}
+              {% when 'DUBL' %}{% assign dest_name = 'Dublin / Pleasanton' %}
               {% when 'EMBR' %}{% assign dest_name = 'Embarcadero' %}
               {% when 'FRMT' %}{% assign dest_name = 'Fremont' %}
               {% when 'FTVL' %}{% assign dest_name = 'Fruitvale' %}
@@ -119,72 +107,45 @@
               {% when 'MCAR' %}{% assign dest_name = 'MacArthur' %}
               {% when 'MLBR' %}{% assign dest_name = 'Millbrae' %}
               {% when 'MLPT' %}{% assign dest_name = 'Milpitas' %}
-              {% when 'MONT' %}{% assign dest_name = 'Montgomery St' %}
+              {% when 'MONT' %}{% assign dest_name = 'Montgomery St.' %}
               {% when 'NBRK' %}{% assign dest_name = 'North Berkeley' %}
-              {% when 'NCON' %}{% assign dest_name = 'North Concord' %}
-              {% when 'OAKL' %}{% assign dest_name = 'Oakland Airport' %}
+              {% when 'NCON' %}{% assign dest_name = 'North Concord / Martinez' %}
+              {% when 'OAKL' %}{% assign dest_name = 'Oakland International Airport' %}
               {% when 'ORIN' %}{% assign dest_name = 'Orinda' %}
-              {% when 'PITT' %}{% assign dest_name = 'Pittsburg' %}
+              {% when 'PITT' %}{% assign dest_name = 'Pittsburg / Bay Point' %}
               {% when 'PCTR' %}{% assign dest_name = 'Pittsburg Center' %}
-              {% when 'PHIL' %}{% assign dest_name = 'Pleasant Hill' %}
+              {% when 'PHIL' %}{% assign dest_name = 'Pleasant Hill / Contra Costa Centre' %}
               {% when 'PLZA' %}{% assign dest_name = 'El Cerrito Plaza' %}
-              {% when 'POWL' %}{% assign dest_name = 'Powell St' %}
+              {% when 'POWL' %}{% assign dest_name = 'Powell St.' %}
               {% when 'RICH' %}{% assign dest_name = 'Richmond' %}
               {% when 'ROCK' %}{% assign dest_name = 'Rockridge' %}
               {% when 'SANL' %}{% assign dest_name = 'San Leandro' %}
               {% when 'SBRN' %}{% assign dest_name = 'San Bruno' %}
-              {% when 'SFIA' %}{% assign dest_name = 'SFO Airport' %}
+              {% when 'SFIA' %}{% assign dest_name = 'San Francisco International Airport' %}
               {% when 'SHAY' %}{% assign dest_name = 'South Hayward' %}
-              {% when 'SSAN' %}{% assign dest_name = 'South SF' %}
+              {% when 'SSAN' %}{% assign dest_name = 'South San Francisco' %}
               {% when 'UCTY' %}{% assign dest_name = 'Union City' %}
-              {% when 'WARM' %}{% assign dest_name = 'Warm Springs' %}
+              {% when 'WARM' %}{% assign dest_name = 'Warm Springs / South Fremont' %}
               {% when 'WCRK' %}{% assign dest_name = 'Walnut Creek' %}
-              {% when 'WDUB' %}{% assign dest_name = 'West Dublin' %}
+              {% when 'WDUB' %}{% assign dest_name = 'West Dublin / Pleasanton' %}
               {% when 'WOAK' %}{% assign dest_name = 'West Oakland' %}
               {% else %}{% assign dest_name = dest_code %}
             {% endcase %}
 
-            <div class="label label--small text--black">
+            <div class="label label--small text--black dest-text" data-clamp="2">
               {{ origin_name }} → {{ dest_name }}
             </div>
 
-            <!-- Show first unique route only -->
-            <div class="layout layout--col gap--small mt--small">
+            <!-- Collect unique route combinations -->
+            <div class="layout layout--col" style="gap: 3px; margin-top: 4px;">
               {% assign processed_routes = "" %}
-              {% assign route_count = 0 %}
               {% for trip in trips %}
-                {% if route_count < 1 %}
-                  {% assign route_key = "" %}
+                {% assign route_key = "" %}
+                {% assign route_time = trip['@tripTime'] %}
 
-                  <!-- Build route key -->
-                  {% if trip.leg[0] %}
-                    {% for leg in trip.leg %}
-                      {% assign heading_lower = leg['@trainHeadStation'] | downcase %}
-                      {% if heading_lower contains 'richmond' %}
-                        {% assign abbreviation = 'RICH' %}
-                      {% elsif heading_lower contains 'millbrae' %}
-                        {% assign abbreviation = 'MLBR' %}
-                      {% elsif heading_lower contains 'dublin' %}
-                        {% assign abbreviation = 'DUBL' %}
-                      {% elsif heading_lower contains 'berryessa' %}
-                        {% assign abbreviation = 'BERY' %}
-                      {% elsif heading_lower contains 'daly' %}
-                        {% assign abbreviation = 'DALY' %}
-                      {% elsif heading_lower contains 'antioch' %}
-                        {% assign abbreviation = 'ANTC' %}
-                      {% elsif heading_lower contains 'pittsburg' %}
-                        {% assign abbreviation = 'PITT' %}
-                      {% elsif heading_lower contains 'sfo' or heading_lower contains 'international airport' %}
-                        {% assign abbreviation = 'SFIA' %}
-                      {% elsif heading_lower contains 'oakland airport' %}
-                        {% assign abbreviation = 'OAKL' %}
-                      {% else %}
-                        {% assign abbreviation = leg['@trainHeadStation'] %}
-                      {% endif %}
-                      {% assign route_key = route_key | append: abbreviation | append: "/" %}
-                    {% endfor %}
-                  {% else %}
-                    {% assign leg = trip.leg %}
+                <!-- Build route key from all legs -->
+                {% if trip.leg[0] %}
+                  {% for leg in trip.leg %}
                     {% assign heading_lower = leg['@trainHeadStation'] | downcase %}
                     {% if heading_lower contains 'richmond' %}
                       {% assign abbreviation = 'RICH' %}
@@ -208,45 +169,41 @@
                       {% assign abbreviation = leg['@trainHeadStation'] %}
                     {% endif %}
                     {% assign route_key = route_key | append: abbreviation | append: "/" %}
+                  {% endfor %}
+                {% else %}
+                  {% assign leg = trip.leg %}
+                  {% assign heading_lower = leg['@trainHeadStation'] | downcase %}
+                  {% if heading_lower contains 'richmond' %}
+                    {% assign abbreviation = 'RICH' %}
+                  {% elsif heading_lower contains 'millbrae' %}
+                    {% assign abbreviation = 'MLBR' %}
+                  {% elsif heading_lower contains 'dublin' %}
+                    {% assign abbreviation = 'DUBL' %}
+                  {% elsif heading_lower contains 'berryessa' %}
+                    {% assign abbreviation = 'BERY' %}
+                  {% elsif heading_lower contains 'daly' %}
+                    {% assign abbreviation = 'DALY' %}
+                  {% elsif heading_lower contains 'antioch' %}
+                    {% assign abbreviation = 'ANTC' %}
+                  {% elsif heading_lower contains 'pittsburg' %}
+                    {% assign abbreviation = 'PITT' %}
+                  {% elsif heading_lower contains 'sfo' or heading_lower contains 'international airport' %}
+                    {% assign abbreviation = 'SFIA' %}
+                  {% elsif heading_lower contains 'oakland airport' %}
+                    {% assign abbreviation = 'OAKL' %}
+                  {% else %}
+                    {% assign abbreviation = leg['@trainHeadStation'] %}
                   {% endif %}
+                  {% assign route_key = route_key | append: abbreviation | append: "/" %}
+                {% endif %}
 
-                  <!-- Display route if not already processed -->
-                  {% unless processed_routes contains route_key %}
-                    <div class="flex flex--row flex--between route-row">
-                      <div class="flex flex--wrap route-badges">
-                        {% if trip.leg[0] %}
-                          {% for leg in trip.leg %}
-                            {% assign heading_lower = leg['@trainHeadStation'] | downcase %}
-                            {% if heading_lower contains 'richmond' %}
-                              {% assign abbreviation = 'RICH' %}
-                            {% elsif heading_lower contains 'millbrae' %}
-                              {% assign abbreviation = 'MLBR' %}
-                            {% elsif heading_lower contains 'dublin' %}
-                              {% assign abbreviation = 'DUBL' %}
-                            {% elsif heading_lower contains 'berryessa' %}
-                              {% assign abbreviation = 'BERY' %}
-                            {% elsif heading_lower contains 'daly' %}
-                              {% assign abbreviation = 'DALY' %}
-                            {% elsif heading_lower contains 'antioch' %}
-                              {% assign abbreviation = 'ANTC' %}
-                            {% elsif heading_lower contains 'pittsburg' %}
-                              {% assign abbreviation = 'PITT' %}
-                            {% elsif heading_lower contains 'sfo' or heading_lower contains 'international airport' %}
-                              {% assign abbreviation = 'SFIA' %}
-                            {% elsif heading_lower contains 'oakland airport' %}
-                              {% assign abbreviation = 'OAKL' %}
-                            {% else %}
-                              {% assign abbreviation = leg['@trainHeadStation'] %}
-                            {% endif %}
-
-                            <div class="bg--black rounded--small badge-sm">
-                              <div class="label label--xsmall text--white bold-nowrap">
-                                {{ abbreviation }}
-                              </div>
-                            </div>
-                          {% endfor %}
-                        {% else %}
-                          {% assign leg = trip.leg %}
+                <!-- Display route if not already processed -->
+                {% unless processed_routes contains route_key %}
+                  <div class="flex flex--row" style="padding: 4px 6px; background: #f0f0f0; border-radius: 4px; align-items: center; justify-content: space-between;">
+                    <!-- Route badges -->
+                    <div class="flex flex--wrap" style="gap: 3px; align-items: center;">
+                      {% if trip.leg[0] %}
+                        {% for leg in trip.leg %}
                           {% assign heading_lower = leg['@trainHeadStation'] | downcase %}
                           {% if heading_lower contains 'richmond' %}
                             {% assign abbreviation = 'RICH' %}
@@ -270,22 +227,52 @@
                             {% assign abbreviation = leg['@trainHeadStation'] %}
                           {% endif %}
 
-                          <div class="bg--black rounded--small badge-sm">
-                            <div class="label label--xsmall text--white bold-nowrap">
+                          <div class="bg--black rounded--small" style="padding: 4px 6px;">
+                            <div class="label label--small text--white" style="font-weight: bold; white-space: nowrap;">
                               {{ abbreviation }}
                             </div>
                           </div>
+                        {% endfor %}
+                      {% else %}
+                        {% assign leg = trip.leg %}
+                        {% assign heading_lower = leg['@trainHeadStation'] | downcase %}
+                        {% if heading_lower contains 'richmond' %}
+                          {% assign abbreviation = 'RICH' %}
+                        {% elsif heading_lower contains 'millbrae' %}
+                          {% assign abbreviation = 'MLBR' %}
+                        {% elsif heading_lower contains 'dublin' %}
+                          {% assign abbreviation = 'DUBL' %}
+                        {% elsif heading_lower contains 'berryessa' %}
+                          {% assign abbreviation = 'BERY' %}
+                        {% elsif heading_lower contains 'daly' %}
+                          {% assign abbreviation = 'DALY' %}
+                        {% elsif heading_lower contains 'antioch' %}
+                          {% assign abbreviation = 'ANTC' %}
+                        {% elsif heading_lower contains 'pittsburg' %}
+                          {% assign abbreviation = 'PITT' %}
+                        {% elsif heading_lower contains 'sfo' or heading_lower contains 'international airport' %}
+                          {% assign abbreviation = 'SFIA' %}
+                        {% elsif heading_lower contains 'oakland airport' %}
+                          {% assign abbreviation = 'OAKL' %}
+                        {% else %}
+                          {% assign abbreviation = leg['@trainHeadStation'] %}
                         {% endif %}
-                      </div>
 
-                      <div class="label label--xsmall text--black bold-nowrap">
-                        {{ trip['@tripTime'] }} min
-                      </div>
+                        <div class="bg--black rounded--small" style="padding: 4px 6px;">
+                          <div class="label label--small text--white" style="font-weight: bold; white-space: nowrap;">
+                            {{ abbreviation }}
+                          </div>
+                        </div>
+                      {% endif %}
                     </div>
-                    {% assign processed_routes = processed_routes | append: route_key | append: "," %}
-                    {% assign route_count = route_count | plus: 1 %}
-                  {% endunless %}
-                {% endif %}
+
+                    <!-- Travel time -->
+                    <div class="label label--small text--black" style="font-weight: bold; white-space: nowrap;">
+                      {{ route_time }} min
+                    </div>
+                  </div>
+                  {% assign processed_routes = processed_routes | append: route_key | append: "," %}
+                {% endunless %}
               {% endfor %}
             </div>
           </div>
@@ -294,10 +281,10 @@
         <!-- First trip large card -->
         {% assign first_trip = trips[0] %}
         {% if first_trip %}
-        <div class="item bg--black rounded--medium p--medium">
-          <div class="layout layout--col gap--small">
+        <div class="item bg--black rounded--medium" style="padding: 20px; flex-grow: 1;">
+          <div class="content layout--col gap--medium">
             <!-- Train Line Badges -->
-            <div class="flex flex--wrap gap--small">
+            <div class="flex flex--wrap gap--small mb--medium">
               {% if first_trip.leg[0] %}
                 {% assign leg_count = 0 %}
                 {% for leg in first_trip.leg %}
@@ -326,7 +313,7 @@
 
                   {% if abbreviation and leg_count < 2 %}
                     <div class="bg--white rounded--small px--medium py--medium">
-                      <div class="label label--large text--black label--outline bold-nowrap">
+                      <div class="label label--large text--black label--outline" style="font-weight: bold; white-space: nowrap;">
                       {{ abbreviation }}
                       </div>
                     </div>
@@ -358,38 +345,31 @@
                   {% assign abbreviation = leg['@trainHeadStation'] %}
                 {% endif %}
                 <div class="bg--white rounded--small px--medium py--medium">
-                  <div class="label label--large text--black label--outline bold-nowrap">
+                  <div class="label label--large text--black label--outline" style="font-weight: bold; white-space: nowrap;">
                      {{ abbreviation }}
                   </div>
                 </div>
               {% endif %}
             </div>
 
-            <!-- Departure Time -->
-            <div class="value value--large text--white nowrap">
+            <div class="value value--xlarge text--white" style="white-space: nowrap;">
               {{ first_trip['@origTimeMin'] }}
             </div>
-            <div class="text--gray-50">DEPART</div>
-
+            <div class="label label--medium text--white">DEPART</div>
             <div class="divider"></div>
-
-            <!-- Arrival Time -->
-            <div class="value value--large text--white nowrap">
-              {{ first_trip['@destTimeMin'] }}
-            </div>
-            <div class="text--gray-50">ARRIVE</div>
+            <div class="label label--medium text--white">ARRIVE {{ first_trip['@destTimeMin'] }}</div>
           </div>
         </div>
         {% endif %}
       </div>
 
       <!-- Right column - Three small cards stacked vertically -->
-      <div class="flex flex--col gap--small col-narrow">
+      <div class="layout layout--col gap--medium" style="grid-column: span 1;">
         {% for trip in trips offset:1 limit:3 %}
-          <div class="item bg--black rounded--medium p--medium">
-            <div class="layout layout--col gap--small">
+          <div class="item bg--black rounded--medium" style="padding: 10px;">
+            <div class="content layout--col gap--small">
               <!-- Train Line Badges -->
-              <div class="flex flex--wrap gap--small">
+              <div class="flex flex--wrap gap--small mb--small">
                 {% if trip.leg[0] %}
                   {% assign leg_count = 0 %}
                   {% for leg in trip.leg %}
@@ -418,7 +398,7 @@
 
                     {% if abbreviation and leg_count < 2 %}
                       <div class="bg--white rounded--small px--small py--small">
-                        <div class="label label--small text--black label--outline bold-nowrap">
+                        <div class="label label--small text--black label--outline" style="font-weight: bold; white-space: nowrap;">
                         {{ abbreviation }}
                         </div>
                       </div>
@@ -450,26 +430,19 @@
                     {% assign abbreviation = leg['@trainHeadStation'] %}
                   {% endif %}
                   <div class="bg--white rounded--small px--small py--small">
-                    <div class="label label--xsmall text--black label--outline bold-nowrap">
+                    <div class="label label--xsmall text--black label--outline" style="font-weight: bold; white-space: nowrap;">
                        {{ abbreviation }}
                     </div>
                   </div>
                 {% endif %}
               </div>
 
-              <!-- Departure Time -->
-              <div class="value value--small text--white nowrap">
+              <div class="value value--small text--white" style="white-space: nowrap;">
                 {{ trip['@origTimeMin'] }}
               </div>
-              <div class="text--gray-50">DEPART</div>
-
+              <div class="label label--xsmall text--white">DEPART</div>
               <div class="divider"></div>
-
-              <!-- Arrival Time -->
-              <div class="value value--small text--white nowrap">
-                {{ trip['@destTimeMin'] }}
-              </div>
-              <div class="text--gray-50">ARRIVE</div>
+              <div class="label label--xsmall text--white">ARRIVE {{ trip['@destTimeMin'] }}</div>
             </div>
           </div>
         {% endfor %}
