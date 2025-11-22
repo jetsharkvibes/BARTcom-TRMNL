@@ -1,200 +1,102 @@
 <style>
   :root {
-    /* Font sizes */
-    --font-size-header: 50px;
+    --font-size-header: 24px;
     --font-size-time-large: 100px;
     --font-size-time-small: 50px;
-    --font-size-duration: 14px;
     --font-size-label: 10px;
-    --font-size-badge: 12px;
-
-    /* Line spacing */
-    --line-height-normal: 1;
-    --line-height-tight: 1;
-    --line-height-relaxed: 1;
-
-    /* Card padding */
-    --padding-card-large: 9px;
-    --padding-card-medium: 10px;
-    --padding-card-small: 2px;
-    --padding-badge: 4px 4px;
-
-    /* Gap spacing */
-    --gap-large: 10px;
-    --gap-medium: 8px;
-    --gap-small: 6px;
-    --gap-tiny: 4px;
-
-    /* Border radius */
-    --radius-large: 8px;
-    --radius-medium: 6px;
-    --radius-small: 4px;
-
-    /* Summary card specific */
-    --summary-header-margin-bottom: 8px;
-    --summary-header-padding-bottom: 8px;
-    --trip-row-padding: 8px 0;
   }
 
   * {
     font-family: "NicoClean-Regular", "dogicapixel", monospace;
-    line-height: var(--line-height-normal);
-  }
-
-  .two-column-layout {
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    gap: var(--gap-large);
-    width: 100%;
-    max-width: 100%;
-    box-sizing: border-box;
-  }
-
-  .left-column {
-    display: flex;
-    flex-direction: column;
-    gap: var(--gap-large);
-    min-width: 0;
-  }
-
-  .right-column {
-    display: flex;
-    flex-direction: column;
-    gap: var(--gap-medium);
-    min-width: 0;
   }
 
   .summary-card {
     background: #fff;
     border: 2px solid #000;
-    border-radius: var(--radius-large);
-    padding: var(--padding-card-large);
-    box-sizing: border-box;
-    line-height: var(--line-height-tight);
+    border-radius: 8px;
+    padding: 12px;
   }
 
   .summary-header {
-    color: #000;
     font-size: var(--font-size-header);
     font-weight: bold;
-    margin-bottom: var(--summary-header-margin-bottom);
-    padding-bottom: var(--summary-header-padding-bottom);
-    border-bottom: 1px solid #ccc;
-    line-height: var(--line-height-tight);
+    padding-bottom: 8px;
+    border-bottom: 2px solid #000;
+    margin-bottom: 8px;
   }
 
-  .trip-badges {
-    display: flex;
-    gap: var(--gap-small);
-    flex-wrap: wrap;
+  .trip-row {
+    padding: 6px 0;
   }
 
-  .trip-badge-label {
-    font-size: var(--font-size-badge);
-    line-height: var(--line-height-tight);
-  }
-
-  .trip-duration {
-    color: #000;
-    font-size: var(--font-size-duration);
+  .trip-badge {
+    display: inline-block;
+    border: 2px solid #000;
+    border-radius: 4px;
+    padding: 4px 8px;
+    font-size: 12px;
     font-weight: bold;
-    white-space: nowrap;
-    line-height: var(--line-height-tight);
   }
 
-  .main-trip-card {
+  .trip-time {
+    font-size: 14px;
+    font-weight: bold;
+  }
+
+  .trip-card {
     background: #000;
-    border-radius: var(--radius-large);
-    padding: var(--padding-card-large);
-    box-sizing: border-box;
-    flex: 100;
+    border-radius: 8px;
+    padding: 12px;
+    color: #fff;
   }
 
-  .small-trip-card {
+  .trip-card-small {
     background: #000;
-    border-radius: var(--radius-large);
-    padding: var(--padding-card-medium);
-    box-sizing: border-box;
+    border-radius: 8px;
+    padding: 10px;
+    color: #fff;
   }
 
-  .card-content {
-    display: flex;
-    flex-direction: column;
-    gap: var(--gap-medium);
-    line-height: var(--line-height-tight);
-    justify-content: center;
-  }
-
-  .badge-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--gap-small);
-  }
-
-  .badge {
-    background: #fff;
-    border-radius: var(--radius-small);
-    padding: var(--padding-badge);
-    line-height: var(--line-height-tight);
-  }
-
-  .time-display {
+  .time-large {
     font-size: var(--font-size-time-large);
-    color: #fff;
-    white-space: nowrap;
-    line-height: var(--line-height-tight);
+    line-height: 1;
   }
 
-  .time-display-small {
+  .time-small {
     font-size: var(--font-size-time-small);
-    color: #fff;
-    white-space: nowrap;
-    line-height: var(--line-height-tight);
+    line-height: 1;
   }
 
   .time-label {
     font-size: var(--font-size-label);
-    color: #fff;
     text-transform: uppercase;
-    line-height: var(--line-height-tight);
-  }
-
-  .divider-line {
-    height: 1px;
-    background: rgba(255, 255, 255, 0.2);
-    margin: var(--gap-tiny) 0;
+    opacity: 0.8;
   }
 
   .card-footer {
-    margin-top: auto;
-    padding-top: var(--gap-medium);
-    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(255, 255, 255, 0.3);
   }
 
-  .unique-trip-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: var(--gap-small) 0;
-    line-height: var(--line-height-tight);
-  }
-
-  .trip-route-name {
-    font-size: var(--font-size-badge);
+  .badge-dark {
+    background: #fff;
+    border-radius: 4px;
+    padding: 4px 8px;
+    color: #000;
+    font-size: 12px;
     font-weight: bold;
-    line-height: var(--line-height-tight);
-    border: 2px solid #000;
-    border-radius: var(--radius-small);
-    padding: var(--gap-small);
     display: inline-block;
-  }</style>
+  }
+</style>
 
 <div class="layout layout--col gap--large">
   {% if root.schedule.request.trip %}
     {% assign trips = root.schedule.request.trip %}
-    <div class="two-column-layout">
+
+    <div class="layout layout--row gap--medium">
       <!-- LEFT COLUMN: Summary + Main Trip -->
-      <div class="left-column">
+      <div class="layout layout--col gap--medium" style="flex: 2;">
         {% comment %}Resolve origin station name{% endcomment %}
         {% capture origin_lower %}{{ root.origin | downcase }}{% endcapture %}
         {% assign origin_lower = origin_lower | strip %}
@@ -637,8 +539,8 @@
               {% assign unique_routes = unique_routes | append: route_key | append: "|" %}
 
               {% if unique_count < 2 %}
-              <div class="unique-trip-row">
-                <div class="trip-route-name">
+              <div class="layout layout--row trip-row" style="justify-content: space-between; align-items: center;">
+                <div class="trip-badge">
                   {% comment %}
                     Resolve station names for this trip's legs before displaying
                   {% endcomment %}
@@ -901,7 +803,7 @@
                   {% endif %}
                 </div>
 
-                <div class="trip-duration">{{ trip['@tripTime'] }} min</div>
+                <div class="trip-time">{{ trip['@tripTime'] }} min</div>
               </div>
               {% assign unique_count = unique_count | plus: 1 %}
               {% endif %}
@@ -912,10 +814,10 @@
         <!-- Main Trip Card (First Trip) -->
         {% assign trips = root.schedule.request.trip %}
         {% assign main_trip = trips[0] %}
-        <div class="main-trip-card">
-          <div class="card-content">
+        <div class="trip-card">
+          <div class="layout layout--col gap--medium" style="justify-content: center;">
             <!-- Train Line Badges -->
-            <div class="badge-row">
+            <div class="layout layout--row gap--small" style="flex-wrap: wrap;">
               {% if main_trip.leg[0] %}
                 {% assign leg_count = 0 %}
                 {% for leg in main_trip.leg %}
@@ -943,11 +845,7 @@
                   {% endif %}
 
                   {% if abbreviation and leg_count < 2 %}
-                    <div class="badge">
-                      <div class="label label--small text--black" style="font-weight: bold; white-space: nowrap;">
-                        {{ abbreviation }}
-                      </div>
-                    </div>
+                    <div class="badge-dark">{{ abbreviation }}</div>
                     {% assign leg_count = leg_count | plus: 1 %}
                   {% endif %}
                 {% endfor %}
@@ -975,15 +873,11 @@
                 {% else %}
                   {% assign abbreviation = leg['@trainHeadStation'] %}
                 {% endif %}
-                <div class="badge">
-                  <div class="label label--small text--black" style="font-weight: bold; white-space: nowrap;">
-                    {{ abbreviation }}
-                  </div>
-                </div>
+                <div class="badge-dark">{{ abbreviation }}</div>
               {% endif %}
             </div>
 
-            <div class="time-display">{{ main_trip['@origTimeMin'] }}</div>
+            <div class="time-large">{{ main_trip['@origTimeMin'] }}</div>
             <div class="time-label">DEPART</div>
             <div class="card-footer">
               <div class="time-label">ARRIVE {{ main_trip['@destTimeMin'] }}</div>
@@ -993,12 +887,12 @@
       </div>
 
       <!-- RIGHT COLUMN: Three Smaller Trip Cards -->
-      <div class="right-column">
+      <div class="layout layout--col gap--small" style="flex: 1;">
         {% for trip in trips offset:1 limit:3 %}
-          <div class="small-trip-card">
-            <div class="card-content">
+          <div class="trip-card-small">
+            <div class="layout layout--col gap--small" style="justify-content: center;">
               <!-- Train Line Badges -->
-              <div class="badge-row">
+              <div class="layout layout--row gap--small" style="flex-wrap: wrap;">
                 {% if trip.leg[0] %}
                   {% assign leg_count = 0 %}
                   {% for leg in trip.leg %}
@@ -1026,11 +920,7 @@
                     {% endif %}
 
                     {% if abbreviation and leg_count < 2 %}
-                      <div class="badge">
-                        <div class="label label--xsmall text--black" style="font-weight: bold; white-space: nowrap;">
-                          {{ abbreviation }}
-                        </div>
-                      </div>
+                      <div class="badge-dark">{{ abbreviation }}</div>
                       {% assign leg_count = leg_count | plus: 1 %}
                     {% endif %}
                   {% endfor %}
@@ -1058,15 +948,11 @@
                   {% else %}
                     {% assign abbreviation = leg['@trainHeadStation'] %}
                   {% endif %}
-                  <div class="badge">
-                    <div class="label label--xsmall text--black" style="font-weight: bold; white-space: nowrap;">
-                      {{ abbreviation }}
-                    </div>
-                  </div>
+                  <div class="badge-dark">{{ abbreviation }}</div>
                 {% endif %}
               </div>
 
-              <div class="time-display-small">{{ trip['@origTimeMin'] }}</div>
+              <div class="time-small">{{ trip['@origTimeMin'] }}</div>
               <div class="card-footer">
                 <div class="time-label">ARRIVE {{ trip['@destTimeMin'] }}</div>
               </div>
