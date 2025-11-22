@@ -1,21 +1,50 @@
 <style>
   :root {
+    /* Font sizes */
     --font-size-header: 16px;
     --font-size-time-large: 24px;
     --font-size-time-small: 18px;
     --font-size-duration: 14px;
     --font-size-label: 10px;
     --font-size-badge: 12px;
+
+    /* Line spacing */
+    --line-height-normal: 1.4;
+    --line-height-tight: 1.2;
+    --line-height-relaxed: 1.6;
+
+    /* Card padding */
+    --padding-card-large: 12px;
+    --padding-card-medium: 10px;
+    --padding-card-small: 8px;
+    --padding-badge: 4px 8px;
+
+    /* Gap spacing */
+    --gap-large: 12px;
+    --gap-medium: 8px;
+    --gap-small: 6px;
+    --gap-tiny: 4px;
+
+    /* Border radius */
+    --radius-large: 8px;
+    --radius-medium: 6px;
+    --radius-small: 4px;
+
+    /* Summary card specific */
+    --summary-header-margin-bottom: 12px;
+    --summary-header-padding-bottom: 8px;
+    --trip-row-padding: 8px 0;
   }
 
   * {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    line-height: var(--line-height-normal);
   }
 
   .two-column-layout {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 12px;
+    gap: var(--gap-large);
     width: 100%;
     max-width: 100%;
     box-sizing: border-box;
@@ -24,40 +53,43 @@
   .left-column {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: var(--gap-large);
     min-width: 0;
   }
 
   .right-column {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: var(--gap-medium);
     min-width: 0;
   }
 
   .summary-card {
     background: #fff;
     border: 2px solid #000;
-    border-radius: 8px;
-    padding: 12px;
+    border-radius: var(--radius-large);
+    padding: var(--padding-card-large);
     box-sizing: border-box;
+    line-height: var(--line-height-tight);
   }
 
   .summary-header {
     color: #000;
     font-size: var(--font-size-header);
     font-weight: bold;
-    margin-bottom: 12px;
-    padding-bottom: 8px;
+    margin-bottom: var(--summary-header-margin-bottom);
+    padding-bottom: var(--summary-header-padding-bottom);
     border-bottom: 1px solid #ccc;
+    line-height: var(--line-height-tight);
   }
 
   .unique-trip-row {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 8px 0;
+    padding: var(--trip-row-padding);
     border-bottom: 1px solid #eee;
+    line-height: var(--line-height-tight);
   }
 
   .unique-trip-row:last-child {
@@ -66,12 +98,13 @@
 
   .trip-badges {
     display: flex;
-    gap: 6px;
+    gap: var(--gap-small);
     flex-wrap: wrap;
   }
 
   .trip-badge-label {
     font-size: var(--font-size-badge);
+    line-height: var(--line-height-tight);
   }
 
   .trip-duration {
@@ -79,63 +112,69 @@
     font-size: var(--font-size-duration);
     font-weight: bold;
     white-space: nowrap;
+    line-height: var(--line-height-tight);
   }
 
   .main-trip-card {
     background: #000;
-    border-radius: 8px;
-    padding: 12px;
+    border-radius: var(--radius-large);
+    padding: var(--padding-card-large);
     box-sizing: border-box;
     flex: 1;
   }
 
   .small-trip-card {
     background: #000;
-    border-radius: 8px;
-    padding: 10px;
+    border-radius: var(--radius-large);
+    padding: var(--padding-card-medium);
     box-sizing: border-box;
   }
 
   .card-content {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: var(--gap-medium);
+    line-height: var(--line-height-tight);
   }
 
   .badge-row {
     display: flex;
     flex-wrap: wrap;
-    gap: 6px;
+    gap: var(--gap-small);
   }
 
   .badge {
     background: #fff;
-    border-radius: 4px;
-    padding: 4px 8px;
+    border-radius: var(--radius-small);
+    padding: var(--padding-badge);
+    line-height: var(--line-height-tight);
   }
 
   .time-display {
     font-size: var(--font-size-time-large);
     color: #fff;
     white-space: nowrap;
+    line-height: var(--line-height-tight);
   }
 
   .time-display-small {
     font-size: var(--font-size-time-small);
     color: #fff;
     white-space: nowrap;
+    line-height: var(--line-height-tight);
   }
 
   .time-label {
     font-size: var(--font-size-label);
     color: #fff;
     text-transform: uppercase;
+    line-height: var(--line-height-tight);
   }
 
   .divider-line {
     height: 1px;
     background: rgba(255, 255, 255, 0.2);
-    margin: 4px 0;
+    margin: var(--gap-tiny) 0;
   }
 </style>
 
