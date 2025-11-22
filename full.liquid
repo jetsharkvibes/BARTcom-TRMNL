@@ -5,21 +5,33 @@
   Edit these values to adjust text sizes throughout the display.
   All values are in pixels (px).
 
-  header_font_size      - Route title (Origin → Destination)
-  main_time_font_size   - Large departure time in main card
-  main_label_font_size  - Labels in main card (DEPART/ARRIVE)
-  side_time_font_size   - Departure times in side cards
-  side_label_font_size  - Labels in side cards (ARRIVE)
-  badge_font_size       - Train line badges and route labels
-  footer_font_size      - Footer text
+  --header-size      - Route title (Origin → Destination)
+  --main-time-size   - Large departure time in main card
+  --main-label-size  - Labels in main card (DEPART/ARRIVE)
+  --side-time-size   - Departure times in side cards
+  --side-label-size  - Labels in side cards (ARRIVE)
+  --badge-size       - Train line badges and route labels
+  --footer-size      - Footer text
 {%- endcomment -%}
-{% assign header_font_size = 20 %}
-{% assign main_time_font_size = 64 %}
-{% assign main_label_font_size = 12 %}
-{% assign side_time_font_size = 40 %}
-{% assign side_label_font_size = 11 %}
-{% assign badge_font_size = 11 %}
-{% assign footer_font_size = 10 %}
+<style>
+:root {
+  --header-size: 20px;
+  --main-time-size: 64px;
+  --main-label-size: 12px;
+  --side-time-size: 40px;
+  --side-label-size: 11px;
+  --badge-size: 11px;
+  --footer-size: 10px;
+}
+.bart-header { font-size: var(--header-size); }
+.bart-main-time { font-size: var(--main-time-size); }
+.bart-main-label { font-size: var(--main-label-size); }
+.bart-side-time { font-size: var(--side-time-size); }
+.bart-side-label { font-size: var(--side-label-size); }
+.bart-badge { font-size: var(--badge-size); }
+.bart-badge-container { padding: 3px; }
+.bart-footer { font-size: var(--footer-size); }
+</style>
 
 <div class="layout layout--col gap--small">
   {% if root.schedule.request.trip %}
@@ -236,7 +248,7 @@
               {% assign destination_name = 'West Oakland' %}
             {% endif %}
 
-            <div class="title title--small" style="font-size: {{ header_font_size }}px;">{{ origin_name }} → {{ destination_name }}</div>
+            <div class="title title--small bart-header">{{ origin_name }} → {{ destination_name }}</div>
 
             <!-- Unique Trip Routes - Show 2 fastest -->
             {% assign unique_routes = "" %}
@@ -283,7 +295,7 @@
                           {% endif %}
 
                           {% if abbreviation and leg_count < 2 %}
-                            <div class="label label--small label--outline" style="font-size: {{ badge_font_size }}px;">{{ abbreviation }}</div>
+                            <div class="label label--small label--outline bart-badge">{{ abbreviation }}</div>
                             {% assign leg_count = leg_count | plus: 1 %}
                           {% endif %}
                         {% endfor %}
@@ -309,10 +321,10 @@
                         {% else %}
                           {% assign abbreviation = leg['@trainHeadStation'] %}
                         {% endif %}
-                        <div class="label label--small label--outline" style="font-size: {{ badge_font_size }}px;">{{ abbreviation }}</div>
+                        <div class="label label--small label--outline bart-badge">{{ abbreviation }}</div>
                       {% endif %}
                     </div>
-                    <div class="label label--small text--black" style="font-size: {{ badge_font_size }}px; font-weight: bold;">{{ trip['@tripTime'] }} min</div>
+                    <div class="label label--small text--black bart-badge" style="font-weight: bold;">{{ trip['@tripTime'] }} min</div>
                   </div>
                 {% endunless %}
               {% endif %}
@@ -351,8 +363,8 @@
                   {% endif %}
 
                   {% if abbreviation and leg_count < 2 %}
-                    <div class="bg--white rounded--small" style="padding: 3px 3px;">
-                      <div class="label label--small text--black" style="font-size: {{ badge_font_size }}px; font-weight: bold;">
+                    <div class="bg--white rounded--small bart-badge-container">
+                      <div class="label label--small text--black bart-badge" style="font-weight: bold;">
                         {{ abbreviation }}
                       </div>
                     </div>
@@ -381,18 +393,18 @@
                 {% else %}
                   {% assign abbreviation = leg['@trainHeadStation'] %}
                 {% endif %}
-                <div class="bg--white rounded--small" style="padding: 3px 3px;">
-                  <div class="label label--small text--black" style="font-size: {{ badge_font_size }}px; font-weight: bold;">
+                <div class="bg--white rounded--small bart-badge-container">
+                  <div class="label label--small text--black bart-badge" style="font-weight: bold;">
                     {{ abbreviation }}
                   </div>
                 </div>
               {% endif %}
             </div>
 
-            <div class="value value--large text--white" style="font-size: {{ main_time_font_size }}px; line-height: 1.0;">{{ main_trip['@origTimeMin'] }}</div>
-            <div class="label label--small text--white" style="font-size: {{ main_label_font_size }}px;">DEPART</div>
+            <div class="value value--large text--white bart-main-time" style="line-height: 1.0;">{{ main_trip['@origTimeMin'] }}</div>
+            <div class="label label--small text--white bart-main-label">DEPART</div>
             <div class="divider"></div>
-            <div class="label label--small text--white" style="font-size: {{ main_label_font_size }}px;">ARRIVE {{ main_trip['@destTimeMin'] }}</div>
+            <div class="label label--small text--white bart-main-label">ARRIVE {{ main_trip['@destTimeMin'] }}</div>
           </div>
         </div>
       </div>
@@ -429,7 +441,7 @@
                     {% endif %}
 
                     {% if abbreviation and leg_count < 2 %}
-                      <div class="bg--white rounded--small" style="padding: 3px 3px;">
+                      <div class="bg--white rounded--small bart-badge-container">
                         <div class="label label--small text--black" style="font-weight: bold;">
                           {{ abbreviation }}
                         </div>
@@ -459,7 +471,7 @@
                   {% else %}
                     {% assign abbreviation = leg['@trainHeadStation'] %}
                   {% endif %}
-                  <div class="bg--white rounded--small" style="padding: 3px 3px;">
+                  <div class="bg--white rounded--small bart-badge-container">
                     <div class="label label--small text--black" style="font-weight: bold;">
                       {{ abbreviation }}
                     </div>
@@ -467,9 +479,9 @@
                 {% endif %}
               </div>
 
-              <div class="value value--medium text--white" style="font-size: {{ side_time_font_size }}px; line-height: 1.0;">{{ trip['@origTimeMin'] }}</div>
+              <div class="value value--medium text--white bart-side-time" style="line-height: 1.0;">{{ trip['@origTimeMin'] }}</div>
               <div class="divider"></div>
-              <div class="label label--small text--white" style="font-size: {{ side_label_font_size }}px;">ARRIVE {{ trip['@destTimeMin'] }}</div>
+              <div class="label label--small text--white bart-side-label">ARRIVE {{ trip['@destTimeMin'] }}</div>
             </div>
           </div>
         {% endfor %}
@@ -490,6 +502,6 @@
 
   <div class="footer">
     <div class="divider"></div>
-    <div class="label label--small" style="font-size: {{ footer_font_size }}px;">Real-time BART schedule</div>
+    <div class="label label--small bart-footer">Real-time BART schedule</div>
   </div>
 </div>
