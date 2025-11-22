@@ -83,19 +83,6 @@
     line-height: var(--line-height-tight);
   }
 
-  .unique-trip-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: var(--trip-row-padding);
-    border-bottom: 1px solid #eee;
-    line-height: var(--line-height-tight);
-  }
-
-  .unique-trip-row:last-child {
-    border-bottom: none;
-  }
-
   .trip-badges {
     display: flex;
     gap: var(--gap-small);
@@ -177,7 +164,33 @@
     background: rgba(255, 255, 255, 0.2);
     margin: var(--gap-tiny) 0;
   }
-</style>
+
+  .card-footer {
+    margin-top: auto;
+    padding-top: var(--gap-medium);
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .unique-trip-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 2px solid #000;
+    border-radius: var(--radius-small);
+    padding: var(--gap-small);
+    margin-bottom: var(--gap-small);
+    line-height: var(--line-height-tight);
+  }
+
+  .unique-trip-row:last-child {
+    margin-bottom: 0;
+  }
+
+  .trip-route-name {
+    font-size: var(--font-size-badge);
+    font-weight: bold;
+    line-height: var(--line-height-tight);
+  }</style>
 
 <div class="layout layout--col gap--large">
   {% if root.schedule.request.trip %}
@@ -426,12 +439,13 @@
               {% assign unique_routes = unique_routes | append: route_key | append: "|" %}
 
               <div class="unique-trip-row">
-                <div class="trip-badges">
+                <div class="trip-route-name">
                   {% comment %}
                     Resolve station names for this trip's legs before displaying
                   {% endcomment %}
                   {% if trip.leg[0] %}
                     {% assign leg_count = 0 %}
+                    {% assign route_display = "" %}
                     {% for leg in trip.leg %}
                       {% comment %} Resolve station name and abbreviation {% endcomment %}
                       {% capture station_name %}{{ leg['@trainHeadStation'] | downcase }}{% endcapture %}
@@ -561,16 +575,16 @@
                         {% assign abbreviation = leg['@trainHeadStation'] %}{% assign full_name = leg['@trainHeadStation'] %}
                       {% endif %}
 
-                      {% comment %} Display badge using resolved names {% endcomment %}
-                      {% if abbreviation and leg_count < 3 %}
-                        <div class="badge" title="{{ full_name }}">
-                          <div class="label label--small text--black trip-badge-label" style="font-weight: bold; white-space: nowrap;">
-                            {{ abbreviation }}
-                          </div>
-                        </div>
+                      {% comment %} Build route display string {% endcomment %}
+                      {% if full_name and leg_count < 3 %}
+                        {% if route_display != "" %}
+                          {% assign route_display = route_display | append: " → " %}
+                        {% endif %}
+                        {% assign route_display = route_display | append: full_name %}
                         {% assign leg_count = leg_count | plus: 1 %}
                       {% endif %}
                     {% endfor %}
+                    {{ route_display }}
                   {% else %}
                     {% comment %} Single leg trip - resolve station name {% endcomment %}
                     {% assign leg = trip.leg %}
@@ -683,12 +697,8 @@
                       {% assign full_name = leg['@trainHeadStation'] %}
                     {% endif %}
 
-                    {% comment %} Display badge using resolved name {% endcomment %}
-                    <div class="badge" title="{{ full_name }}">
-                      <div class="label label--xsmall text--black trip-badge-label" style="font-weight: bold; white-space: nowrap;">
-                        {{ abbreviation }}
-                      </div>
-                    </div>
+                    {% comment %} Display full name {% endcomment %}
+                    {{ full_name }}
                   {% endif %}
                 </div>
 
@@ -774,8 +784,9 @@
 
             <div class="time-display">{{ main_trip['@origTimeMin'] }}</div>
             <div class="time-label">DEPART</div>
-            <div class="divider-line"></div>
-            <div class="time-label">ARRIVE {{ main_trip['@destTimeMin'] }}</div>
+            <div class="card-footer">
+              <div class="time-label">ARRIVE {{ main_trip['@destTimeMin'] }}</div>
+            </div>
           </div>
         </div>
       </div>
@@ -855,8 +866,9 @@
               </div>
 
               <div class="time-display-small">{{ trip['@origTimeMin'] }}</div>
-              <div class="divider-line"></div>
-              <div class="time-label">ARRIVE {{ trip['@destTimeMin'] }}</div>
+              <div class="card-footer">
+                <div class="time-label">ARRIVE {{ trip['@destTimeMin'] }}</div>
+              </div>
             </div>
           </div>
         {% endfor %}
