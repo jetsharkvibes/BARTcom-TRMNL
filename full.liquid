@@ -28,69 +28,7 @@
                   {% assign unique_count = unique_count | plus: 1 %}
 
                   <div class="flex flex--between" style="align-items: center;">
-                    <div class="flex flex--wrap gap--small">
-                      {% if trip.leg[0] %}
-                        {% assign leg_count = 0 %}
-                        {% for leg in trip.leg %}
-                          {% assign heading_lower = leg['@trainHeadStation'] | downcase %}
-                          {% if heading_lower contains 'richmond' %}
-                            {% assign abbreviation = 'RICH' %}
-                          {% elsif heading_lower contains 'millbrae' %}
-                            {% assign abbreviation = 'MLBR' %}
-                          {% elsif heading_lower contains 'dublin' %}
-                            {% assign abbreviation = 'DUBL' %}
-                          {% elsif heading_lower contains 'berryessa' %}
-                            {% assign abbreviation = 'BERY' %}
-                          {% elsif heading_lower contains 'daly' %}
-                            {% assign abbreviation = 'DALY' %}
-                          {% elsif heading_lower contains 'antioch' %}
-                            {% assign abbreviation = 'ANTC' %}
-                          {% elsif heading_lower contains 'pittsburg' %}
-                            {% assign abbreviation = 'PITT' %}
-                          {% elsif heading_lower contains 'sfo' %}
-                            {% assign abbreviation = 'SFIA' %}
-                          {% else %}
-                            {% assign abbreviation = leg['@trainHeadStation'] %}
-                          {% endif %}
-
-                          {% if abbreviation and leg_count < 2 %}
-                            <div class="bg--black rounded--small px--small py--small">
-                              <div class="label label--small text--white" style="font-weight: bold;">
-                                {{ abbreviation }}
-                              </div>
-                            </div>
-                            {% assign leg_count = leg_count | plus: 1 %}
-                          {% endif %}
-                        {% endfor %}
-                      {% else %}
-                        {% assign leg = trip.leg %}
-                        {% assign heading_lower = leg['@trainHeadStation'] | downcase %}
-                        {% if heading_lower contains 'richmond' %}
-                          {% assign abbreviation = 'RICH' %}
-                        {% elsif heading_lower contains 'millbrae' %}
-                          {% assign abbreviation = 'MLBR' %}
-                        {% elsif heading_lower contains 'dublin' %}
-                          {% assign abbreviation = 'DUBL' %}
-                        {% elsif heading_lower contains 'berryessa' %}
-                          {% assign abbreviation = 'BERY' %}
-                        {% elsif heading_lower contains 'daly' %}
-                          {% assign abbreviation = 'DALY' %}
-                        {% elsif heading_lower contains 'antioch' %}
-                          {% assign abbreviation = 'ANTC' %}
-                        {% elsif heading_lower contains 'pittsburg' %}
-                          {% assign abbreviation = 'PITT' %}
-                        {% elsif heading_lower contains 'sfo' %}
-                          {% assign abbreviation = 'SFIA' %}
-                        {% else %}
-                          {% assign abbreviation = leg['@trainHeadStation'] %}
-                        {% endif %}
-                        <div class="bg--black rounded--small px--small py--small">
-                          <div class="label label--small text--white" style="font-weight: bold;">
-                            {{ abbreviation }}
-                          </div>
-                        </div>
-                      {% endif %}
-                    </div>
+                    <div class="label label--small text--black">{{ trip['@origTimeMin'] }}</div>
                     <div class="label label--small text--black" style="font-weight: bold;">{{ trip['@tripTime'] }} min</div>
                   </div>
                 {% endunless %}
