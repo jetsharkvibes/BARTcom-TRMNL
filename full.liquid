@@ -622,6 +622,7 @@
             Build unique route keys to identify distinct trip patterns
           {% endcomment %}
           {% assign unique_routes = "" %}
+          {% assign unique_count = 0 %}
           {% for trip in trips %}
             {% assign route_key = "" %}
             {% if trip.leg[0] %}
@@ -635,6 +636,7 @@
             {% unless unique_routes contains route_key %}
               {% assign unique_routes = unique_routes | append: route_key | append: "|" %}
 
+              {% if unique_count < 2 %}
               <div class="unique-trip-row">
                 <div class="trip-route-name">
                   {% comment %}
@@ -901,6 +903,8 @@
 
                 <div class="trip-duration">{{ trip['@tripTime'] }} min</div>
               </div>
+              {% assign unique_count = unique_count | plus: 1 %}
+              {% endif %}
             {% endunless %}
           {% endfor %}
         </div>
