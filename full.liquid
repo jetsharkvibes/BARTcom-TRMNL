@@ -135,6 +135,7 @@
     flex-direction: column;
     gap: var(--gap-medium);
     line-height: var(--line-height-tight);
+    justify-content: center;
   }
 
   .badge-row {
@@ -184,9 +185,227 @@
     <div class="two-column-layout">
       <!-- LEFT COLUMN: Summary + Main Trip -->
       <div class="left-column">
+        {% comment %}Resolve origin station name{% endcomment %}
+        {% capture origin_lower %}{{ root.origin | downcase }}{% endcapture %}
+        {% assign origin_lower = origin_lower | strip %}
+        {% if origin_lower contains '12th' %}
+          {% assign origin_full = '12th St. Oakland City Center' %}
+        {% elsif origin_lower contains '16th' %}
+          {% assign origin_full = '16th St. Mission' %}
+        {% elsif origin_lower contains '19th' %}
+          {% assign origin_full = '19th St. Oakland' %}
+        {% elsif origin_lower contains '24th' %}
+          {% assign origin_full = '24th St. Mission' %}
+        {% elsif origin_lower contains 'antioch' %}
+          {% assign origin_full = 'Antioch' %}
+        {% elsif origin_lower contains 'ashby' %}
+          {% assign origin_full = 'Ashby' %}
+        {% elsif origin_lower contains 'balboa' %}
+          {% assign origin_full = 'Balboa Park' %}
+        {% elsif origin_lower contains 'bay fair' %}
+          {% assign origin_full = 'Bay Fair' %}
+        {% elsif origin_lower contains 'berryessa' or origin_lower contains 'north san jose' %}
+          {% assign origin_full = 'Berryessa / North San Jose' %}
+        {% elsif origin_lower contains 'castro valley' %}
+          {% assign origin_full = 'Castro Valley' %}
+        {% elsif origin_lower contains 'civic' %}
+          {% assign origin_full = 'Civic Center / UN Plaza' %}
+        {% elsif origin_lower contains 'coliseum' %}
+          {% assign origin_full = 'Coliseum' %}
+        {% elsif origin_lower contains 'colma' %}
+          {% assign origin_full = 'Colma' %}
+        {% elsif origin_lower contains 'concord' and origin_lower contains 'north' %}
+          {% assign origin_full = 'North Concord / Martinez' %}
+        {% elsif origin_lower contains 'concord' %}
+          {% assign origin_full = 'Concord' %}
+        {% elsif origin_lower contains 'daly' %}
+          {% assign origin_full = 'Daly City' %}
+        {% elsif origin_lower contains 'downtown berkeley' %}
+          {% assign origin_full = 'Downtown Berkeley' %}
+        {% elsif origin_lower contains 'dublin' or origin_lower contains 'pleasanton' %}
+          {% assign origin_full = 'Dublin / Pleasanton' %}
+        {% elsif origin_lower contains 'el cerrito del norte' %}
+          {% assign origin_full = 'El Cerrito del Norte' %}
+        {% elsif origin_lower contains 'el cerrito plaza' %}
+          {% assign origin_full = 'El Cerrito Plaza' %}
+        {% elsif origin_lower contains 'embarcadero' %}
+          {% assign origin_full = 'Embarcadero' %}
+        {% elsif origin_lower contains 'fremont' and origin_lower contains 'warm' %}
+          {% assign origin_full = 'Warm Springs / South Fremont' %}
+        {% elsif origin_lower contains 'fremont' %}
+          {% assign origin_full = 'Fremont' %}
+        {% elsif origin_lower contains 'fruitvale' %}
+          {% assign origin_full = 'Fruitvale' %}
+        {% elsif origin_lower contains 'glen park' %}
+          {% assign origin_full = 'Glen Park' %}
+        {% elsif origin_lower contains 'hayward' and origin_lower contains 'south' %}
+          {% assign origin_full = 'South Hayward' %}
+        {% elsif origin_lower contains 'hayward' %}
+          {% assign origin_full = 'Hayward' %}
+        {% elsif origin_lower contains 'lafayette' %}
+          {% assign origin_full = 'Lafayette' %}
+        {% elsif origin_lower contains 'lake merritt' %}
+          {% assign origin_full = 'Lake Merritt' %}
+        {% elsif origin_lower contains 'macarthur' %}
+          {% assign origin_full = 'MacArthur' %}
+        {% elsif origin_lower contains 'millbrae' %}
+          {% assign origin_full = 'Millbrae' %}
+        {% elsif origin_lower contains 'milpitas' %}
+          {% assign origin_full = 'Milpitas' %}
+        {% elsif origin_lower contains 'montgomery' %}
+          {% assign origin_full = 'Montgomery St.' %}
+        {% elsif origin_lower contains 'north berkeley' %}
+          {% assign origin_full = 'North Berkeley' %}
+        {% elsif origin_lower contains 'oakland' and origin_lower contains 'airport' %}
+          {% assign origin_full = 'Oakland International Airport' %}
+        {% elsif origin_lower contains 'orinda' %}
+          {% assign origin_full = 'Orinda' %}
+        {% elsif origin_lower contains 'pittsburg center' %}
+          {% assign origin_full = 'Pittsburg Center' %}
+        {% elsif origin_lower contains 'pittsburg' or origin_lower contains 'bay point' %}
+          {% assign origin_full = 'Pittsburg / Bay Point' %}
+        {% elsif origin_lower contains 'pleasant hill' %}
+          {% assign origin_full = 'Pleasant Hill / Contra Costa Centre' %}
+        {% elsif origin_lower contains 'powell' %}
+          {% assign origin_full = 'Powell St.' %}
+        {% elsif origin_lower contains 'richmond' %}
+          {% assign origin_full = 'Richmond' %}
+        {% elsif origin_lower contains 'rockridge' %}
+          {% assign origin_full = 'Rockridge' %}
+        {% elsif origin_lower contains 'san bruno' %}
+          {% assign origin_full = 'San Bruno' %}
+        {% elsif origin_lower contains 'sfo' or origin_lower contains 'san francisco' and origin_lower contains 'airport' %}
+          {% assign origin_full = 'San Francisco International Airport' %}
+        {% elsif origin_lower contains 'san leandro' %}
+          {% assign origin_full = 'San Leandro' %}
+        {% elsif origin_lower contains 'south san francisco' %}
+          {% assign origin_full = 'South San Francisco' %}
+        {% elsif origin_lower contains 'union city' %}
+          {% assign origin_full = 'Union City' %}
+        {% elsif origin_lower contains 'walnut creek' %}
+          {% assign origin_full = 'Walnut Creek' %}
+        {% elsif origin_lower contains 'warm springs' %}
+          {% assign origin_full = 'Warm Springs / South Fremont' %}
+        {% elsif origin_lower contains 'west dublin' %}
+          {% assign origin_full = 'West Dublin / Pleasanton' %}
+        {% elsif origin_lower contains 'west oakland' %}
+          {% assign origin_full = 'West Oakland' %}
+        {% else %}
+          {% assign origin_full = root.origin %}
+        {% endif %}
+
+        {% comment %}Resolve destination station name{% endcomment %}
+        {% capture dest_lower %}{{ root.destination | downcase }}{% endcapture %}
+        {% assign dest_lower = dest_lower | strip %}
+        {% if dest_lower contains '12th' %}
+          {% assign dest_full = '12th St. Oakland City Center' %}
+        {% elsif dest_lower contains '16th' %}
+          {% assign dest_full = '16th St. Mission' %}
+        {% elsif dest_lower contains '19th' %}
+          {% assign dest_full = '19th St. Oakland' %}
+        {% elsif dest_lower contains '24th' %}
+          {% assign dest_full = '24th St. Mission' %}
+        {% elsif dest_lower contains 'antioch' %}
+          {% assign dest_full = 'Antioch' %}
+        {% elsif dest_lower contains 'ashby' %}
+          {% assign dest_full = 'Ashby' %}
+        {% elsif dest_lower contains 'balboa' %}
+          {% assign dest_full = 'Balboa Park' %}
+        {% elsif dest_lower contains 'bay fair' %}
+          {% assign dest_full = 'Bay Fair' %}
+        {% elsif dest_lower contains 'berryessa' or dest_lower contains 'north san jose' %}
+          {% assign dest_full = 'Berryessa / North San Jose' %}
+        {% elsif dest_lower contains 'castro valley' %}
+          {% assign dest_full = 'Castro Valley' %}
+        {% elsif dest_lower contains 'civic' %}
+          {% assign dest_full = 'Civic Center / UN Plaza' %}
+        {% elsif dest_lower contains 'coliseum' %}
+          {% assign dest_full = 'Coliseum' %}
+        {% elsif dest_lower contains 'colma' %}
+          {% assign dest_full = 'Colma' %}
+        {% elsif dest_lower contains 'concord' and dest_lower contains 'north' %}
+          {% assign dest_full = 'North Concord / Martinez' %}
+        {% elsif dest_lower contains 'concord' %}
+          {% assign dest_full = 'Concord' %}
+        {% elsif dest_lower contains 'daly' %}
+          {% assign dest_full = 'Daly City' %}
+        {% elsif dest_lower contains 'downtown berkeley' %}
+          {% assign dest_full = 'Downtown Berkeley' %}
+        {% elsif dest_lower contains 'dublin' or dest_lower contains 'pleasanton' %}
+          {% assign dest_full = 'Dublin / Pleasanton' %}
+        {% elsif dest_lower contains 'el cerrito del norte' %}
+          {% assign dest_full = 'El Cerrito del Norte' %}
+        {% elsif dest_lower contains 'el cerrito plaza' %}
+          {% assign dest_full = 'El Cerrito Plaza' %}
+        {% elsif dest_lower contains 'embarcadero' %}
+          {% assign dest_full = 'Embarcadero' %}
+        {% elsif dest_lower contains 'fremont' and dest_lower contains 'warm' %}
+          {% assign dest_full = 'Warm Springs / South Fremont' %}
+        {% elsif dest_lower contains 'fremont' %}
+          {% assign dest_full = 'Fremont' %}
+        {% elsif dest_lower contains 'fruitvale' %}
+          {% assign dest_full = 'Fruitvale' %}
+        {% elsif dest_lower contains 'glen park' %}
+          {% assign dest_full = 'Glen Park' %}
+        {% elsif dest_lower contains 'hayward' and dest_lower contains 'south' %}
+          {% assign dest_full = 'South Hayward' %}
+        {% elsif dest_lower contains 'hayward' %}
+          {% assign dest_full = 'Hayward' %}
+        {% elsif dest_lower contains 'lafayette' %}
+          {% assign dest_full = 'Lafayette' %}
+        {% elsif dest_lower contains 'lake merritt' %}
+          {% assign dest_full = 'Lake Merritt' %}
+        {% elsif dest_lower contains 'macarthur' %}
+          {% assign dest_full = 'MacArthur' %}
+        {% elsif dest_lower contains 'millbrae' %}
+          {% assign dest_full = 'Millbrae' %}
+        {% elsif dest_lower contains 'milpitas' %}
+          {% assign dest_full = 'Milpitas' %}
+        {% elsif dest_lower contains 'montgomery' %}
+          {% assign dest_full = 'Montgomery St.' %}
+        {% elsif dest_lower contains 'north berkeley' %}
+          {% assign dest_full = 'North Berkeley' %}
+        {% elsif dest_lower contains 'oakland' and dest_lower contains 'airport' %}
+          {% assign dest_full = 'Oakland International Airport' %}
+        {% elsif dest_lower contains 'orinda' %}
+          {% assign dest_full = 'Orinda' %}
+        {% elsif dest_lower contains 'pittsburg center' %}
+          {% assign dest_full = 'Pittsburg Center' %}
+        {% elsif dest_lower contains 'pittsburg' or dest_lower contains 'bay point' %}
+          {% assign dest_full = 'Pittsburg / Bay Point' %}
+        {% elsif dest_lower contains 'pleasant hill' %}
+          {% assign dest_full = 'Pleasant Hill / Contra Costa Centre' %}
+        {% elsif dest_lower contains 'powell' %}
+          {% assign dest_full = 'Powell St.' %}
+        {% elsif dest_lower contains 'richmond' %}
+          {% assign dest_full = 'Richmond' %}
+        {% elsif dest_lower contains 'rockridge' %}
+          {% assign dest_full = 'Rockridge' %}
+        {% elsif dest_lower contains 'san bruno' %}
+          {% assign dest_full = 'San Bruno' %}
+        {% elsif dest_lower contains 'sfo' or dest_lower contains 'san francisco' and dest_lower contains 'airport' %}
+          {% assign dest_full = 'San Francisco International Airport' %}
+        {% elsif dest_lower contains 'san leandro' %}
+          {% assign dest_full = 'San Leandro' %}
+        {% elsif dest_lower contains 'south san francisco' %}
+          {% assign dest_full = 'South San Francisco' %}
+        {% elsif dest_lower contains 'union city' %}
+          {% assign dest_full = 'Union City' %}
+        {% elsif dest_lower contains 'walnut creek' %}
+          {% assign dest_full = 'Walnut Creek' %}
+        {% elsif dest_lower contains 'warm springs' %}
+          {% assign dest_full = 'Warm Springs / South Fremont' %}
+        {% elsif dest_lower contains 'west dublin' %}
+          {% assign dest_full = 'West Dublin / Pleasanton' %}
+        {% elsif dest_lower contains 'west oakland' %}
+          {% assign dest_full = 'West Oakland' %}
+        {% else %}
+          {% assign dest_full = root.destination %}
+        {% endif %}
+
         <!-- Summary Card -->
         <div class="summary-card">
-          <div class="summary-header">{{ root.origin }} → {{ root.destination }}</div>
+          <div class="summary-header">{{ origin_full }} → {{ dest_full }}</div>
 
           <!-- Unique Trip Routes -->
           {% comment %}
