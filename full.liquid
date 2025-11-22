@@ -1,20 +1,354 @@
-<div class="layout layout--col gap--large">
-  <!-- Header: Origin → Destination -->
-  <div class="header">
-    <div class="title title--large">{{ root.origin }} → {{ root.destination }}</div>
-  </div>
+{%- comment -%}
+  ========================================
+  FONT SIZE CONFIGURATION
+  ========================================
+  Edit these values to adjust text sizes throughout the display.
+  All values are in pixels (px).
 
+  --header-size      - Route title (Origin → Destination)
+  --main-time-size   - Large departure time in main card
+  --main-label-size  - Labels in main card (DEPART/ARRIVE)
+  --side-time-size   - Departure times in side cards
+  --side-label-size  - Labels in side cards (ARRIVE)
+  --badge-size       - Train line badges and route labels
+  --footer-size      - Footer text
+{%- endcomment -%}
+<style>
+:root {
+  --header-size: 30px;
+  --main-time-size: 100px;
+  --main-label-size: 20px;
+  --side-time-size: 40px;
+  --side-label-size: 15px;
+  --badge-size: 15px;
+  --footer-size: 10px;
+}
+.bart-header { line-height: .8; font-size: var(--header-size); }
+.bart-main-time { font-size: var(--main-time-size); }
+.bart-main-label { font-size: var(--main-label-size); }
+.bart-side-time { font-size: var(--side-time-size); }
+.bart-side-label { font-size: var(--side-label-size); }
+.bart-badge { font-size: var(--badge-size); }
+.bart-badge-container { padding: 3px; }
+.bart-footer { font-size: var(--footer-size); }
+</style>
+
+<div class="layout layout--col gap--small">
   {% if root.schedule.request.trip %}
-    <div class="grid grid--cols-3 gap--medium">
-      {% assign trips = root.schedule.request.trip %}
-      {% for trip in trips limit:3 %}
-        <div class="item bg--black rounded--medium" style="padding: 10px;">
+    {% assign trips = root.schedule.request.trip %}
+    <div class="grid grid--cols-3 gap--small">
+      <!-- LEFT COLUMN: Summary + Main Trip (spans 2 columns) -->
+      <div class="layout layout--col gap--small col--span-2" style="height: 100%;">
+        <!-- Summary Card - 1/3 vertical space -->
+        <div class="item bg--white rounded--medium" style="padding: 8px; border: 2px solid #000; flex: 1;">
           <div class="content layout--col gap--small">
+            <!-- Convert station abbreviations to full names for header -->
+            {% assign origin_name = root.origin %}
+            {% assign destination_name = root.destination %}
+
+            {% assign origin_lower = root.origin | downcase | strip %}
+            {% if origin_lower == '12th' or origin_lower contains '12th' %}
+              {% assign origin_name = '12th St. Oakland City Center' %}
+            {% elsif origin_lower == '16th' or origin_lower contains '16th' %}
+              {% assign origin_name = '16th St. Mission' %}
+            {% elsif origin_lower == '19th' or origin_lower contains '19th' %}
+              {% assign origin_name = '19th St. Oakland' %}
+            {% elsif origin_lower == '24th' or origin_lower contains '24th' %}
+              {% assign origin_name = '24th St. Mission' %}
+            {% elsif origin_lower == 'antc' or origin_lower contains 'antioch' %}
+              {% assign origin_name = 'Antioch' %}
+            {% elsif origin_lower == 'ashb' or origin_lower contains 'ashby' %}
+              {% assign origin_name = 'Ashby' %}
+            {% elsif origin_lower == 'balb' or origin_lower contains 'balboa' %}
+              {% assign origin_name = 'Balboa Park' %}
+            {% elsif origin_lower == 'bayf' or origin_lower contains 'bay fair' %}
+              {% assign origin_name = 'Bay Fair' %}
+            {% elsif origin_lower == 'bery' or origin_lower contains 'berryessa' or origin_lower contains 'north san jose' %}
+              {% assign origin_name = 'Berryessa / North San Jose' %}
+            {% elsif origin_lower == 'cast' or origin_lower contains 'castro valley' %}
+              {% assign origin_name = 'Castro Valley' %}
+            {% elsif origin_lower == 'civc' or origin_lower contains 'civic' %}
+              {% assign origin_name = 'Civic Center / UN Plaza' %}
+            {% elsif origin_lower == 'cols' or origin_lower contains 'coliseum' %}
+              {% assign origin_name = 'Coliseum' %}
+            {% elsif origin_lower == 'colm' or origin_lower contains 'colma' %}
+              {% assign origin_name = 'Colma' %}
+            {% elsif origin_lower == 'ncon' or origin_lower contains 'concord' and origin_lower contains 'north' %}
+              {% assign origin_name = 'North Concord / Martinez' %}
+            {% elsif origin_lower == 'conc' or origin_lower contains 'concord' %}
+              {% assign origin_name = 'Concord' %}
+            {% elsif origin_lower == 'daly' or origin_lower contains 'daly' %}
+              {% assign origin_name = 'Daly City' %}
+            {% elsif origin_lower == 'dbrk' or origin_lower contains 'downtown berkeley' %}
+              {% assign origin_name = 'Downtown Berkeley' %}
+            {% elsif origin_lower == 'dubl' or origin_lower == 'wdub' or origin_lower contains 'dublin' or origin_lower contains 'pleasanton' %}
+              {% assign origin_name = 'Dublin / Pleasanton' %}
+            {% elsif origin_lower == 'deln' or origin_lower contains 'el cerrito del norte' %}
+              {% assign origin_name = 'El Cerrito del Norte' %}
+            {% elsif origin_lower == 'plza' or origin_lower contains 'el cerrito plaza' %}
+              {% assign origin_name = 'El Cerrito Plaza' %}
+            {% elsif origin_lower == 'embr' or origin_lower contains 'embarcadero' %}
+              {% assign origin_name = 'Embarcadero' %}
+            {% elsif origin_lower == 'warm' or origin_lower contains 'fremont' and origin_lower contains 'warm' or origin_lower contains 'warm springs' %}
+              {% assign origin_name = 'Warm Springs / South Fremont' %}
+            {% elsif origin_lower == 'frmt' or origin_lower contains 'fremont' %}
+              {% assign origin_name = 'Fremont' %}
+            {% elsif origin_lower == 'ftvl' or origin_lower contains 'fruitvale' %}
+              {% assign origin_name = 'Fruitvale' %}
+            {% elsif origin_lower == 'glen' or origin_lower contains 'glen park' %}
+              {% assign origin_name = 'Glen Park' %}
+            {% elsif origin_lower == 'shay' or origin_lower contains 'hayward' and origin_lower contains 'south' %}
+              {% assign origin_name = 'South Hayward' %}
+            {% elsif origin_lower == 'hayw' or origin_lower contains 'hayward' %}
+              {% assign origin_name = 'Hayward' %}
+            {% elsif origin_lower == 'lafy' or origin_lower contains 'lafayette' %}
+              {% assign origin_name = 'Lafayette' %}
+            {% elsif origin_lower == 'lake' or origin_lower contains 'lake merritt' %}
+              {% assign origin_name = 'Lake Merritt' %}
+            {% elsif origin_lower == 'mcar' or origin_lower contains 'macarthur' %}
+              {% assign origin_name = 'MacArthur' %}
+            {% elsif origin_lower == 'mlbr' or origin_lower contains 'millbrae' %}
+              {% assign origin_name = 'Millbrae' %}
+            {% elsif origin_lower == 'mlpt' or origin_lower contains 'milpitas' %}
+              {% assign origin_name = 'Milpitas' %}
+            {% elsif origin_lower == 'mont' or origin_lower contains 'montgomery' %}
+              {% assign origin_name = 'Montgomery St.' %}
+            {% elsif origin_lower == 'nbrk' or origin_lower contains 'north berkeley' %}
+              {% assign origin_name = 'North Berkeley' %}
+            {% elsif origin_lower == 'oakl' or origin_lower contains 'oakland' and origin_lower contains 'airport' %}
+              {% assign origin_name = 'OAK Airport' %}
+            {% elsif origin_lower == 'orin' or origin_lower contains 'orinda' %}
+              {% assign origin_name = 'Orinda' %}
+            {% elsif origin_lower == 'pctr' or origin_lower contains 'pittsburg center' %}
+              {% assign origin_name = 'Pittsburg Center' %}
+            {% elsif origin_lower == 'pitt' or origin_lower contains 'pittsburg' or origin_lower contains 'bay point' %}
+              {% assign origin_name = 'Pittsburg / Bay Point' %}
+            {% elsif origin_lower == 'phil' or origin_lower contains 'pleasant hill' %}
+              {% assign origin_name = 'Pleasant Hill / Contra Costa Centre' %}
+            {% elsif origin_lower == 'powl' or origin_lower contains 'powell' %}
+              {% assign origin_name = 'Powell St.' %}
+            {% elsif origin_lower == 'rich' or origin_lower contains 'richmond' %}
+              {% assign origin_name = 'Richmond' %}
+            {% elsif origin_lower == 'rock' or origin_lower contains 'rockridge' %}
+              {% assign origin_name = 'Rockridge' %}
+            {% elsif origin_lower == 'sbrn' or origin_lower contains 'san bruno' %}
+              {% assign origin_name = 'San Bruno' %}
+            {% elsif origin_lower == 'sfia' or origin_lower contains 'sfo' or origin_lower contains 'san francisco' and origin_lower contains 'airport' %}
+              {% assign origin_name = 'San Francisco International Airport' %}
+            {% elsif origin_lower == 'sanl' or origin_lower contains 'san leandro' %}
+              {% assign origin_name = 'San Leandro' %}
+            {% elsif origin_lower == 'ssan' or origin_lower contains 'south san francisco' %}
+              {% assign origin_name = 'South San Francisco' %}
+            {% elsif origin_lower == 'ucty' or origin_lower contains 'union city' %}
+              {% assign origin_name = 'Union City' %}
+            {% elsif origin_lower == 'wcrk' or origin_lower contains 'walnut creek' %}
+              {% assign origin_name = 'Walnut Creek' %}
+            {% elsif origin_lower == 'woak' or origin_lower contains 'west oakland' %}
+              {% assign origin_name = 'West Oakland' %}
+            {% endif %}
+
+            {% assign dest_lower = root.destination | downcase | strip %}
+            {% if dest_lower == '12th' or dest_lower contains '12th' %}
+              {% assign destination_name = '12th St. Oakland City Center' %}
+            {% elsif dest_lower == '16th' or dest_lower contains '16th' %}
+              {% assign destination_name = '16th St. Mission' %}
+            {% elsif dest_lower == '19th' or dest_lower contains '19th' %}
+              {% assign destination_name = '19th St. Oakland' %}
+            {% elsif dest_lower == '24th' or dest_lower contains '24th' %}
+              {% assign destination_name = '24th St. Mission' %}
+            {% elsif dest_lower == 'antc' or dest_lower contains 'antioch' %}
+              {% assign destination_name = 'Antioch' %}
+            {% elsif dest_lower == 'ashb' or dest_lower contains 'ashby' %}
+              {% assign destination_name = 'Ashby' %}
+            {% elsif dest_lower == 'balb' or dest_lower contains 'balboa' %}
+              {% assign destination_name = 'Balboa Park' %}
+            {% elsif dest_lower == 'bayf' or dest_lower contains 'bay fair' %}
+              {% assign destination_name = 'Bay Fair' %}
+            {% elsif dest_lower == 'bery' or dest_lower contains 'berryessa' or dest_lower contains 'north san jose' %}
+              {% assign destination_name = 'Berryessa / North San Jose' %}
+            {% elsif dest_lower == 'cast' or dest_lower contains 'castro valley' %}
+              {% assign destination_name = 'Castro Valley' %}
+            {% elsif dest_lower == 'civc' or dest_lower contains 'civic' %}
+              {% assign destination_name = 'Civic Center / UN Plaza' %}
+            {% elsif dest_lower == 'cols' or dest_lower contains 'coliseum' %}
+              {% assign destination_name = 'Coliseum' %}
+            {% elsif dest_lower == 'colm' or dest_lower contains 'colma' %}
+              {% assign destination_name = 'Colma' %}
+            {% elsif dest_lower == 'ncon' or dest_lower contains 'concord' and dest_lower contains 'north' %}
+              {% assign destination_name = 'North Concord / Martinez' %}
+            {% elsif dest_lower == 'conc' or dest_lower contains 'concord' %}
+              {% assign destination_name = 'Concord' %}
+            {% elsif dest_lower == 'daly' or dest_lower contains 'daly' %}
+              {% assign destination_name = 'Daly City' %}
+            {% elsif dest_lower == 'dbrk' or dest_lower contains 'downtown berkeley' %}
+              {% assign destination_name = 'Downtown Berkeley' %}
+            {% elsif dest_lower == 'dubl' or dest_lower == 'wdub' or dest_lower contains 'dublin' or dest_lower contains 'pleasanton' %}
+              {% assign destination_name = 'Dublin / Pleasanton' %}
+            {% elsif dest_lower == 'deln' or dest_lower contains 'el cerrito del norte' %}
+              {% assign destination_name = 'El Cerrito del Norte' %}
+            {% elsif dest_lower == 'plza' or dest_lower contains 'el cerrito plaza' %}
+              {% assign destination_name = 'El Cerrito Plaza' %}
+            {% elsif dest_lower == 'embr' or dest_lower contains 'embarcadero' %}
+              {% assign destination_name = 'Embarcadero' %}
+            {% elsif dest_lower == 'warm' or dest_lower contains 'fremont' and dest_lower contains 'warm' or dest_lower contains 'warm springs' %}
+              {% assign destination_name = 'Warm Springs / South Fremont' %}
+            {% elsif dest_lower == 'frmt' or dest_lower contains 'fremont' %}
+              {% assign destination_name = 'Fremont' %}
+            {% elsif dest_lower == 'ftvl' or dest_lower contains 'fruitvale' %}
+              {% assign destination_name = 'Fruitvale' %}
+            {% elsif dest_lower == 'glen' or dest_lower contains 'glen park' %}
+              {% assign destination_name = 'Glen Park' %}
+            {% elsif dest_lower == 'shay' or dest_lower contains 'hayward' and dest_lower contains 'south' %}
+              {% assign destination_name = 'South Hayward' %}
+            {% elsif dest_lower == 'hayw' or dest_lower contains 'hayward' %}
+              {% assign destination_name = 'Hayward' %}
+            {% elsif dest_lower == 'lafy' or dest_lower contains 'lafayette' %}
+              {% assign destination_name = 'Lafayette' %}
+            {% elsif dest_lower == 'lake' or dest_lower contains 'lake merritt' %}
+              {% assign destination_name = 'Lake Merritt' %}
+            {% elsif dest_lower == 'mcar' or dest_lower contains 'macarthur' %}
+              {% assign destination_name = 'MacArthur' %}
+            {% elsif dest_lower == 'mlbr' or dest_lower contains 'millbrae' %}
+              {% assign destination_name = 'Millbrae' %}
+            {% elsif dest_lower == 'mlpt' or dest_lower contains 'milpitas' %}
+              {% assign destination_name = 'Milpitas' %}
+            {% elsif dest_lower == 'mont' or dest_lower contains 'montgomery' %}
+              {% assign destination_name = 'Montgomery St.' %}
+            {% elsif dest_lower == 'nbrk' or dest_lower contains 'north berkeley' %}
+              {% assign destination_name = 'North Berkeley' %}
+            {% elsif dest_lower == 'oakl' or dest_lower contains 'oakland' and dest_lower contains 'airport' %}
+              {% assign destination_name = 'OAK Airport' %}
+            {% elsif dest_lower == 'orin' or dest_lower contains 'orinda' %}
+              {% assign destination_name = 'Orinda' %}
+            {% elsif dest_lower == 'pctr' or dest_lower contains 'pittsburg center' %}
+              {% assign destination_name = 'Pittsburg Center' %}
+            {% elsif dest_lower == 'pitt' or dest_lower contains 'pittsburg' or dest_lower contains 'bay point' %}
+              {% assign destination_name = 'Pittsburg / Bay Point' %}
+            {% elsif dest_lower == 'phil' or dest_lower contains 'pleasant hill' %}
+              {% assign destination_name = 'Pleasant Hill / Contra Costa Centre' %}
+            {% elsif dest_lower == 'powl' or dest_lower contains 'powell' %}
+              {% assign destination_name = 'Powell St.' %}
+            {% elsif dest_lower == 'rich' or dest_lower contains 'richmond' %}
+              {% assign destination_name = 'Richmond' %}
+            {% elsif dest_lower == 'rock' or dest_lower contains 'rockridge' %}
+              {% assign destination_name = 'Rockridge' %}
+            {% elsif dest_lower == 'sbrn' or dest_lower contains 'san bruno' %}
+              {% assign destination_name = 'San Bruno' %}
+            {% elsif dest_lower == 'sfia' or dest_lower contains 'sfo' or dest_lower contains 'san francisco' and dest_lower contains 'airport' %}
+              {% assign destination_name = 'San Francisco International Airport' %}
+            {% elsif dest_lower == 'sanl' or dest_lower contains 'san leandro' %}
+              {% assign destination_name = 'San Leandro' %}
+            {% elsif dest_lower == 'ssan' or dest_lower contains 'south san francisco' %}
+              {% assign destination_name = 'South San Francisco' %}
+            {% elsif dest_lower == 'ucty' or dest_lower contains 'union city' %}
+              {% assign destination_name = 'Union City' %}
+            {% elsif dest_lower == 'wcrk' or dest_lower contains 'walnut creek' %}
+              {% assign destination_name = 'Walnut Creek' %}
+            {% elsif dest_lower == 'woak' or dest_lower contains 'west oakland' %}
+              {% assign destination_name = 'West Oakland' %}
+            {% endif %}
+
+            <div class="title title--small bart-header">{{ origin_name }} → {{ destination_name }}</div>
+
+            <!-- Unique Trip Routes - Show 2 fastest -->
+            {% assign unique_routes = "" %}
+            {% assign unique_count = 0 %}
+            {% for trip in trips %}
+              {% if unique_count < 2 %}
+                {% assign route_key = "" %}
+                {% if trip.leg[0] %}
+                  {% for leg in trip.leg %}
+                    {% assign route_key = route_key | append: leg['@trainHeadStation'] | append: "," %}
+                  {% endfor %}
+                {% else %}
+                  {% assign route_key = trip.leg['@trainHeadStation'] %}
+                {% endif %}
+
+                {% unless unique_routes contains route_key %}
+                  {% assign unique_routes = unique_routes | append: route_key | append: "|" %}
+                  {% assign unique_count = unique_count | plus: 1 %}
+
+                  <div class="flex flex--between" style="align-items: center;">
+                    <div class="flex flex--wrap gap--small">
+                      {% if trip.leg[0] %}
+                        {% assign leg_count = 0 %}
+                        {% for leg in trip.leg %}
+                          {% assign heading_lower = leg['@trainHeadStation'] | downcase %}
+                          {% if heading_lower contains 'richmond' %}
+                            {% assign abbreviation = 'RICH' %}
+                          {% elsif heading_lower contains 'millbrae' %}
+                            {% assign abbreviation = 'MLBR' %}
+                          {% elsif heading_lower contains 'dublin' %}
+                            {% assign abbreviation = 'DUBL' %}
+                          {% elsif heading_lower contains 'berryessa' %}
+                            {% assign abbreviation = 'BERY' %}
+                          {% elsif heading_lower contains 'daly' %}
+                            {% assign abbreviation = 'DALY' %}
+                          {% elsif heading_lower contains 'antioch' %}
+                            {% assign abbreviation = 'ANTC' %}
+                          {% elsif heading_lower contains 'pittsburg' %}
+                            {% assign abbreviation = 'PITT' %}
+                          {% elsif heading_lower contains 'sfo' %}
+                            {% assign abbreviation = 'SFIA' %}
+                      {% elsif heading_lower contains 'francisco inter' %}
+                    {% assign abbreviation = 'SFIA' %}
+                      {% elsif heading_lower contains 'oakland air' %}
+                  {% assign abbreviation = 'OAKL' %}
+                          {% else %}
+                            {% assign abbreviation = leg['@trainHeadStation'] %}
+                          {% endif %}
+
+                          {% if abbreviation and leg_count < 2 %}
+                            <div class="label label--small label--outline bart-badge">{{ abbreviation }}</div>
+                            {% assign leg_count = leg_count | plus: 1 %}
+                          {% endif %}
+                        {% endfor %}
+                      {% else %}
+                        {% assign leg = trip.leg %}
+                        {% assign heading_lower = leg['@trainHeadStation'] | downcase %}
+                        {% if heading_lower contains 'richmond' %}
+                          {% assign abbreviation = 'RICH' %}
+                        {% elsif heading_lower contains 'millbrae' %}
+                          {% assign abbreviation = 'MLBR' %}
+                        {% elsif heading_lower contains 'dublin' %}
+                          {% assign abbreviation = 'DUBL' %}
+                        {% elsif heading_lower contains 'berryessa' %}
+                          {% assign abbreviation = 'BERY' %}
+                        {% elsif heading_lower contains 'daly' %}
+                          {% assign abbreviation = 'DALY' %}
+                        {% elsif heading_lower contains 'antioch' %}
+                          {% assign abbreviation = 'ANTC' %}
+                        {% elsif heading_lower contains 'pittsburg' %}
+                          {% assign abbreviation = 'PITT' %}
+                        {% elsif heading_lower contains 'sfo' %}
+                          {% assign abbreviation = 'SFIA' %}
+                        {% elsif heading_lower contains 'francisco inter' %}
+                    {% assign abbreviation = 'SFIA' %}    
+                            {% elsif heading_lower contains 'oakland air' %}
+                  {% assign abbreviation = 'OAKL' %}
+                        {% else %}
+                          {% assign abbreviation = leg['@trainHeadStation'] %}
+                        {% endif %}
+                        <div class="label label--small label--outline bart-badge">{{ abbreviation }}</div>
+                      {% endif %}
+                    </div>
+                    <div class="label label--small text--black bart-badge" style="font-weight: bold;">{{ trip['@tripTime'] }} min</div>
+                  </div>
+                {% endunless %}
+              {% endif %}
+            {% endfor %}
+          </div>
+        </div>
+
+        <!-- Main Trip Card (First Trip) - 2/3 vertical space -->
+        {% assign main_trip = trips[0] %}
+        <div class="item bg--black rounded--medium flex flex--center-y flex--center-x" style="padding: 8px; flex: 2;">
+          <div class="content layout--col gap--small flex--center-x">
             <!-- Train Line Badges -->
-            <div class="flex flex--wrap gap--small mb--medium">
-              {% if trip.leg[0] %}
+            <div class="flex flex--wrap gap--small">
+              {% if main_trip.leg[0] %}
                 {% assign leg_count = 0 %}
-                {% for leg in trip.leg %}
+                {% for leg in main_trip.leg %}
                   {% assign heading_lower = leg['@trainHeadStation'] | downcase %}
                   {% if heading_lower contains 'richmond' %}
                     {% assign abbreviation = 'RICH' %}
@@ -30,25 +364,27 @@
                     {% assign abbreviation = 'ANTC' %}
                   {% elsif heading_lower contains 'pittsburg' %}
                     {% assign abbreviation = 'PITT' %}
-                  {% elsif heading_lower contains 'sfo' or heading_lower contains 'international airport' %}
+                  {% elsif heading_lower contains 'sfo' %}
                     {% assign abbreviation = 'SFIA' %}
-                  {% elsif heading_lower contains 'oakland airport' %}
-                    {% assign abbreviation = 'OAKL' %}
+              {% elsif heading_lower contains 'francisco inter' %}
+                    {% assign abbreviation = 'SFIA' %}
+              {% elsif heading_lower contains 'oakland air' %}
+                  {% assign abbreviation = 'OAKL' %}
                   {% else %}
                     {% assign abbreviation = leg['@trainHeadStation'] %}
                   {% endif %}
 
                   {% if abbreviation and leg_count < 2 %}
-                    <div class="bg--white rounded--small px--medium py--medium">
-                      <div class="label label--small text--black label--outline" style="font-weight: bold; white-space: nowrap;">
-                      {{ abbreviation }}
+                    <div class="bg--white rounded--small bart-badge-container">
+                      <div class="label label--small text--black bart-badge" style="font-weight: bold;">
+                        {{ abbreviation }}
                       </div>
                     </div>
                     {% assign leg_count = leg_count | plus: 1 %}
                   {% endif %}
                 {% endfor %}
               {% else %}
-                {% assign leg = trip.leg %}
+                {% assign leg = main_trip.leg %}
                 {% assign heading_lower = leg['@trainHeadStation'] | downcase %}
                 {% if heading_lower contains 'richmond' %}
                   {% assign abbreviation = 'RICH' %}
@@ -64,30 +400,116 @@
                   {% assign abbreviation = 'ANTC' %}
                 {% elsif heading_lower contains 'pittsburg' %}
                   {% assign abbreviation = 'PITT' %}
-                {% elsif heading_lower contains 'sfo' or heading_lower contains 'international airport' %}
+                {% elsif heading_lower contains 'sfo' %}
                   {% assign abbreviation = 'SFIA' %}
-                {% elsif heading_lower contains 'oakland airport' %}
+                    {% elsif heading_lower contains 'francisco inter' %}
+                    {% assign abbreviation = 'SFIA' %}
+                    {% elsif heading_lower contains 'oakland air' %}
                   {% assign abbreviation = 'OAKL' %}
                 {% else %}
                   {% assign abbreviation = leg['@trainHeadStation'] %}
                 {% endif %}
-                <div class="bg--white rounded--small px--medium py--medium">
-                  <div class="label label--small text--black label--outline" style="font-weight: bold; white-space: nowrap;">
-                     {{ abbreviation }}
+                <div class="bg--white rounded--small bart-badge-container">
+                  <div class="label label--small text--black bart-badge" style="font-weight: bold;">
+                    {{ abbreviation }}
                   </div>
                 </div>
               {% endif %}
             </div>
 
-            <div class="value value--medium text--white" style="white-space: nowrap;">
-              {{ trip['@origTimeMin'] }}
-            </div>
-            <div class="label label--xsmall text--white">DEPART</div>
+            <div class="value value--large text--white bart-main-time" style="line-height: 1.0;">{{ main_trip['@origTimeMin'] }}</div>
+            <div class="label label--small text--white bart-main-label">DEPART</div>
             <div class="divider"></div>
-            <div class="label label--xsmall text--white">ARRIVE {{ trip['@destTimeMin'] }}</div>
+            <div class="label label--small text--white bart-main-label">ARRIVE {{ main_trip['@destTimeMin'] }}</div>
           </div>
         </div>
-      {% endfor %}
+      </div>
+
+      <!-- RIGHT COLUMN: Three Smaller Trip Cards (spans 1 column) -->
+      <div class="layout layout--col gap--small" style="height: 100%;">
+        {% for trip in trips offset:1 limit:3 %}
+          <div class="item bg--black rounded--medium flex flex--center-y flex--center-x" style="padding: 8px; flex: 1;">
+            <div class="content layout--col gap--small flex--center-x">
+              <!-- Train Line Badges -->
+              <div class="flex flex--wrap gap--small">
+                {% if trip.leg[0] %}
+                  {% assign leg_count = 0 %}
+                  {% for leg in trip.leg %}
+                    {% assign heading_lower = leg['@trainHeadStation'] | downcase %}
+                    {% if heading_lower contains 'richmond' %}
+                      {% assign abbreviation = 'RICH' %}
+                    {% elsif heading_lower contains 'millbrae' %}
+                      {% assign abbreviation = 'MLBR' %}
+                    {% elsif heading_lower contains 'dublin' %}
+                      {% assign abbreviation = 'DUBL' %}
+                    {% elsif heading_lower contains 'berryessa' %}
+                      {% assign abbreviation = 'BERY' %}
+                    {% elsif heading_lower contains 'daly' %}
+                      {% assign abbreviation = 'DALY' %}
+                    {% elsif heading_lower contains 'antioch' %}
+                      {% assign abbreviation = 'ANTC' %}
+                    {% elsif heading_lower contains 'pittsburg' %}
+                      {% assign abbreviation = 'PITT' %}
+                    {% elsif heading_lower contains 'sfo' %}
+                      {% assign abbreviation = 'SFIA' %}
+                {% elsif heading_lower contains 'francisco inter' %}
+                    {% assign abbreviation = 'SFIA' %}
+                {% elsif heading_lower contains 'oakland air' %}
+                  {% assign abbreviation = 'OAKL' %}
+                    {% else %}
+                      {% assign abbreviation = leg['@trainHeadStation'] %}
+                    {% endif %}
+
+                    {% if abbreviation and leg_count < 2 %}
+                      <div class="bg--white rounded--small bart-badge-container">
+                        <div class="label label--small text--black" style="font-weight: bold;">
+                          {{ abbreviation }}
+                        </div>
+                      </div>
+                      {% assign leg_count = leg_count | plus: 1 %}
+                    {% endif %}
+                  {% endfor %}
+                {% else %}
+                  {% assign leg = trip.leg %}
+                  {% assign heading_lower = leg['@trainHeadStation'] | downcase %}
+                  {% if heading_lower contains 'richmond' %}
+                    {% assign abbreviation = 'RICH' %}
+                  {% elsif heading_lower contains 'millbrae' %}
+                    {% assign abbreviation = 'MLBR' %}
+                  {% elsif heading_lower contains 'dublin' %}
+                    {% assign abbreviation = 'DUBL' %}
+                  {% elsif heading_lower contains 'berryessa' %}
+                    {% assign abbreviation = 'BERY' %}
+                  {% elsif heading_lower contains 'daly' %}
+                    {% assign abbreviation = 'DALY' %}
+                  {% elsif heading_lower contains 'antioch' %}
+                    {% assign abbreviation = 'ANTC' %}
+                  {% elsif heading_lower contains 'pittsburg' %}
+                    {% assign abbreviation = 'PITT' %}
+                  {% elsif heading_lower contains 'sfo' %}
+                    {% assign abbreviation = 'SFIA' %}
+                      {% elsif heading_lower contains 'francisco inter' %}
+                    {% assign abbreviation = 'SFIA' %}
+                 {% elsif heading_lower contains 'oakland air' %}
+                  {% assign abbreviation = 'OAKL' %}     
+                  {% else %}
+                    {% assign abbreviation = leg['@trainHeadStation'] %}
+                  {% endif %}
+                  <div class="bg--white rounded--small bart-badge-container">
+                    <div class="label label--small text--black" style="font-weight: bold;">
+                      {{ abbreviation }}
+                    </div>
+                  </div>
+                {% endif %}
+              </div>
+
+              <div class="value value--medium text--white bart-side-time" style="line-height: 1.0;">{{ trip['@origTimeMin'] }}</div>
+              <div class="divider"></div>
+              <div class="label label--small text--white bart-side-label">ARRIVE {{ trip['@destTimeMin'] }}</div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
     </div>
   {% else %}
     <!-- Error State: No data -->
@@ -96,7 +518,7 @@
         <div class="value value--xlarge">⚠️</div>
         <div class="label label--small">No schedule available</div>
         {% if root.message.error %}
-          <div class="label label--xsmall">{{ root.message.error.text }}</div>
+          <div class="label label--small">{{ root.message.error.text }}</div>
         {% endif %}
       </div>
     </div>
@@ -104,6 +526,6 @@
 
   <div class="footer">
     <div class="divider"></div>
-    <div class="label label--xsmall">Real-time BART schedule</div>
+    <div class="label label--small bart-footer">Real-time BART schedule</div>
   </div>
 </div>
